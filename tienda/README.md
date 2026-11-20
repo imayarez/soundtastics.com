@@ -1,4 +1,9 @@
-# Soundtastics shop: PITCHY licence codes
+# Soundtastics website + shop
+
+`public/` is the live website (soundtastics.com), exactly as deployed on Netlify by drag-and-drop on 19 Nov 2026.
+Sales are switched on in `public/commerce-config.js` (Stripe Payment Link + terms/privacy/refund URLs).
+
+## PITCHY licence codes
 
 Netlify function `netlify/functions/stripe-webhook.mjs`, at `https://<site>/api/stripe-webhook`:
 Stripe payment -> licence code (`pitchy-license.mjs`, the same file the plug-in's codes come from) -> email from
