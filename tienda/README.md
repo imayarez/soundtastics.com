@@ -14,3 +14,10 @@ Netlify: base directory `tienda`. Environment variables (secret): `STRIPE_SECRET
 Stripe webhook events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`.
 
 Test without internet or keys: `node test-webhook.mjs`.
+
+## Netlify settings (site scintillating-pavlova-630ada → soundtastics.com)
+
+- Repository: imayarez/soundtastics.com, production branch `main`
+- Base directory `tienda`, publish directory `tienda/public`, functions `tienda/netlify/functions` (also set in `netlify.toml`)
+- Pull requests get a Deploy Preview automatically
+- Secret keys live in Netlify → Manage → Keys and secrets, never in git
