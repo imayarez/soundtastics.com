@@ -2,7 +2,7 @@
 // The hosted checkout must own the price, taxes, order confirmation and delivery.
 window.PITCHY_COMMERCE = Object.freeze({
   salesEnabled: false,
-  checkoutUrl: 'https://buy.stripe.com/bJe9AT4aL0e3aiWbhPdUY00',
+  checkoutUrl: 'https://buy.stripe.com/5kQ6oH7mXe4T3Uy2LjdUY01',
   supportEmail: 'hello@soundtastics.com',
   termsUrl: 'https://soundtastics.com/condiciones.html',
   privacyUrl: 'https://soundtastics.com/privacidad.html',
