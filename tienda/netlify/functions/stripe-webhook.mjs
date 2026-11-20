@@ -69,10 +69,12 @@ export function licenceEmail (codes, downloadUrl)
 <li>Copy the whole code above.</li>
 <li>Open PITCHY, click the gear (settings) &rarr; <b>LICENSE</b> &rarr; <b>PASTE CODE</b>.</li></ol>
 <p>The DEMO silences go away at once. The code works offline and on all your own computers. Keep this email.</p>
+<p style="font-size:12px;color:#666">As you requested at checkout, your licence was delivered immediately, so the 14-day right of withdrawal no longer applies (EU Directive 2011/83/EU, art. 16(m)). This does not affect your legal guarantee: if PITCHY does not work as described, write to us. / Tal como solicitaste al pagar, tu licencia se ha entregado de inmediato, por lo que ya no se aplica el derecho de desistimiento de 14 días; esto no afecta a tu garantía legal.</p>
 <p>Any problem? Just reply to this email.</p><p>Soundtastics</p></div>`;
     const text = `Thank you for buying PITCHY!\n\nYour licence code${many ? "s" : ""}:\n\n${codes.join ("\n\n")}\n\n`
                + `How to activate it:\n1. Install PITCHY from ${downloadUrl}\n2. Copy the whole code.\n3. Open PITCHY, click the gear -> LICENSE -> PASTE CODE.\n\n`
-               + `The DEMO silences go away at once. The code works offline and on all your own computers. Keep this email.\n\nSoundtastics`;
+               + `The DEMO silences go away at once. The code works offline and on all your own computers. Keep this email.\n\n`
+               + `As you requested at checkout, your licence was delivered immediately, so the 14-day right of withdrawal no longer applies (EU Directive 2011/83/EU, art. 16(m)). This does not affect your legal guarantee.\n\nSoundtastics`;
     return { subject: many ? "Your PITCHY licence codes" : "Your PITCHY licence code", html, text };
 }
 
