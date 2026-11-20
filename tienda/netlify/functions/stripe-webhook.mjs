@@ -12,7 +12,7 @@
 //   PITCHY_LICENSE_PRIVATE_KEY   the whole text of soundtastics-license-private.pem
 //   RESEND_API_KEY               re_... (resend.com, sends the email from support@soundtastics.com)
 // Optional:
-//   PITCHY_PRODUCT_IDS           prod_... (comma separated): only these products get a PITCHY code; empty = every payment
+//   PITCHY_PRODUCT_IDS           prod_... (comma separated): only these products get a PITCHY code (default: the PITCHY product)
 //   MAIL_FROM                    default "Soundtastics <support@soundtastics.com>"
 //   DOWNLOAD_URL                 default https://www.soundtastics.com/pitchy
 import { createHmac, timingSafeEqual } from "node:crypto";
@@ -47,7 +47,7 @@ async function stripe (path, { method = "GET", form = null } = {})
 // How many PITCHY licences this checkout bought (0 = none)
 async function pitchyQuantity (sessionId)
 {
-    const ids = env ("PITCHY_PRODUCT_IDS").split (",").map ((s) => s.trim()).filter (Boolean);
+    const ids = env ("PITCHY_PRODUCT_IDS", "prod_Vf24mMNnQi7XRL").split (",").map ((s) => s.trim()).filter (Boolean);
     const items = await stripe (`/checkout/sessions/${sessionId}/line_items?limit=100`);
     let n = 0;
     for (const it of items.data ?? [])
