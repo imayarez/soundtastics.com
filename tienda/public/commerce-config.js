@@ -6,5 +6,7 @@ window.PITCHY_COMMERCE = Object.freeze({
   supportEmail: 'hello@soundtastics.com',
   termsUrl: 'https://soundtastics.com/condiciones.html',
   privacyUrl: 'https://soundtastics.com/privacidad.html',
+  // Installer links for /pitchy#descargar. Empty = button shows "Próximamente".
+  downloads: Object.freeze({ windows: '', mac: '', linux: '' }),
   refundUrl: 'https://soundtastics.com/devoluciones.html'
 });
