@@ -1,0 +1,8 @@
+# secrets: never in git
+*.pem
+.env
+.env.*
+
+node_modules/
+.netlify/
+.DS_Store
