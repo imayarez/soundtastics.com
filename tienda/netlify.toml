@@ -1,0 +1,7 @@
+# Soundtastics shop functions (Netlify). The function lives at https://<this site>/api/stripe-webhook
+[build]
+  publish = "public"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
