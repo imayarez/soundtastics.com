@@ -6,3 +6,5 @@
 
 .brand:has(.companyLogo){display:inline-flex;align-items:center;gap:9px;white-space:nowrap}.companyLogo{display:block;width:35px;height:35px;object-fit:contain;border-radius:5px;flex-shrink:0}.footerBrand .companyLogo{width:30px;height:30px}.technicalDetails{margin-top:14px}.technicalDetails summary{cursor:pointer;color:#aaa;font-size:11px;list-style:none}.technicalDetails summary:after{content:" +"}.technicalDetails[open] summary:after{content:" −"}.technicalDetails p{font-size:11px!important;line-height:1.8;color:#92999e;margin-top:12px}.storeLinks a:hover{color:#fff;text-decoration:underline}@media(max-width:600px){.companyLogo{width:29px;height:29px}.brand:has(.companyLogo){gap:7px}.storeLinks{font-size:11px}}
 header .companyLogo{width:50px;height:50px}header .brand:has(.companyLogo){gap:12px}.footerBrand .companyLogo{width:42px;height:42px}@media(max-width:600px){header .companyLogo{width:40px;height:40px}header .brand:has(.companyLogo){gap:9px}.footerBrand .companyLogo{width:36px;height:36px}}
+
+.was{color:#8a8f95;font-size:.62em;font-weight:400;margin-right:8px;text-decoration-thickness:1px}
