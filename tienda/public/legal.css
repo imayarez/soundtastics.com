@@ -11,3 +11,4 @@
 .legal th{text-align:left;color:#fff;font-size:13px;border-bottom:1px solid #444;padding:10px 12px 10px 0}
 .legal td{border-bottom:1px solid #262626;padding:10px 12px 10px 0;vertical-align:top;font-size:14px}
 .legal code{font-size:13px;background:#1b1b1b;padding:2px 6px;border-radius:4px}
+@media(max-width:600px){.legal table,.legal tbody,.legal tr,.legal td{display:block;width:100%}.legal thead{display:none}.legal tr{border:1px solid #262626;border-radius:8px;padding:6px 14px;margin:0 0 12px}.legal td{border:0;padding:6px 0}.legal td::before{content:attr(data-label);display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:2px}}
