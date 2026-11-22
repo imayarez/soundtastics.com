@@ -17,6 +17,7 @@
 //   DOWNLOAD_URL                 default https://www.soundtastics.com/pitchy
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { makeLicense } from "./pitchy-license.mjs";
+import { normalizePem } from "./license-key.mjs";
 
 const env = (name, fallback = "") => (globalThis.Netlify?.env?.get (name) ?? process.env[name] ?? fallback);
 const STRIPE = "https://api.stripe.com/v1";
@@ -110,7 +111,7 @@ export async function handle (rawBody, signature)
     {
         const n = await pitchyQuantity (session.id);
         if (n === 0) return { status: 200, body: "no PITCHY in this order" };
-        const key = env ("PITCHY_LICENSE_PRIVATE_KEY").replace (/\\n/g, "\n");
+        const key = normalizePem (env ("PITCHY_LICENSE_PRIVATE_KEY"));   // tolerant of how the key was pasted
         codes = Array.from ({ length: n }, (_, i) => makeLicense (key, email, n > 1 ? `${session.id}#${i + 1}` : session.id));
         await stripe (metaPath, { method: "POST", form: { "metadata[pitchy_license]": codes.join (" ") } });
     }
