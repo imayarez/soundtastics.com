@@ -131,9 +131,10 @@ select{background:rgba(255,255,255,.1);color:#fff;border:0;border-radius:4px;pad
 #help b{color:#fff}
 /* mandos: el cuerpo (con su sombra) no gira; solo giran la marca y el moleteado. Aspecto idéntico al original */
 .cap{background:none!important;box-shadow:none!important}
-.kbase{position:absolute;border-radius:50%;pointer-events:none;
+.kbase{position:absolute;left:10px;top:10px;width:64px;height:64px;border-radius:50%;pointer-events:none;
  background:radial-gradient(circle at 50% 50%,transparent 62%,rgba(0,0,0,.25) 64%,transparent 70%),radial-gradient(circle at 38% 30%,#ff6a5e,#e3262b 45%,#a10f14 100%);
  box-shadow:0 5px 0 #6e0a0d,0 7px 10px rgba(0,0,0,.35),inset 0 2px 2px rgba(255,255,255,.35)}
+.io .kbase{left:12px;top:12px;width:72px;height:72px}
 .kn.chop .kbase{background:radial-gradient(circle at 38% 30%,#fff38a,#ffd23f 45%,#c79c00 100%);box-shadow:0 5px 0 #8a6a00,0 7px 10px rgba(0,0,0,.35),inset 0 2px 2px rgba(255,255,255,.35)}
 </style><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
 </head><body>
@@ -821,7 +822,7 @@ window.VC={S};
    else{b.disabled=false;b.classList.toggle('on',b.textContent===d);b.title='Dirección de reproducción';}});
   q('#dLatch').classList.toggle('on',q('#bLatch').classList.contains('on'));q('#bAjustes').classList.toggle('on',q('#ovSet').classList.contains('open'));};
  new MutationObserver(sync).observe(q('#panel'),{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class']});sync();
- document.querySelectorAll('.kw').forEach(w=>{const c=w.querySelector('.cap');if(!c)return;const g=(cls)=>{const d=document.createElement('div');d.className=cls;d.style.cssText=`left:${c.offsetLeft}px;top:${c.offsetTop}px;width:${c.offsetWidth}px;height:${c.offsetHeight}px`;return d;};
+ document.querySelectorAll('.kw').forEach(w=>{const c=w.querySelector('.cap');if(!c)return;const g=(cls)=>{const d=document.createElement('div');d.className=cls;return d;};
   w.insertBefore(g('kbase'),c);});
  const ENDS={stretch:['½×','2×'],pitch:['-12','+12'],size:['1/4','1/64'],artifacts:['CLEAN','CRUSH'],blur:['DRY','WET']};
  document.querySelectorAll('.kw').forEach(w=>{const k=w.dataset.k,svg=w.querySelector('svg');let t='';
