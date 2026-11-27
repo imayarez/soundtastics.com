@@ -1,0 +1,128 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Guía de inicio de PITCHY — Soundtastics</title><meta name="description" content="Guía paso a paso para usar PITCHY desde cero: primera vez, algoritmos, modos, controles, efectos, presets y ajustes. Sin necesidad de saber de plugins."><link rel="icon" type="image/png" href="assets/soundtastics-symbol.png"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="pitchy-store.css"><link rel="stylesheet" href="legal.css"></head><body>
+<header><a class="brand" href="index.html"><img class="companyLogo" src="assets/soundtastics-symbol.png" alt="">soundtastics</a></header>
+<main class="legal help guide"><p class="eyebrow">PITCHY · GUÍA DE INICIO</p><h1>Guía de inicio de PITCHY</h1>
+<p>PITCHY cambia el tono de una voz o de cualquier sonido mientras suena: lo sube o lo baja, lo afina como un autotune o lo convierte en una voz robótica. Esta guía te lleva desde la primera vez que lo abres hasta usarlo con soltura. <strong>No hace falta saber de plugins.</strong></p>
+<nav class="helpIndex" aria-label="Contenido"><a href="#palabras">Cuatro palabras</a><a href="#abrir">1. Abrirlo</a><a href="#primera">2. La primera vez</a><a href="#prueba">3. Tu primera prueba</a><a href="#algoritmo">4. Algoritmo</a><a href="#modos">5. Modos</a><a href="#controles">6. Controles</a><a href="#efectos">7. Efectos</a><a href="#presets">8. Presets</a><a href="#ajustes">9. Ajustes</a><a href="#recetas">10. Recetas</a></nav>
+
+<h2 id="palabras">Cuatro palabras que verás</h2>
+<dl class="glossary">
+<dt>DAW</dt><dd>Tu programa de música: donde grabas y mezclas, como Ableton Live, FL Studio o Logic Pro.</dd>
+<dt>Plugin (VST3, AU)</dt><dd>Un efecto que se carga dentro de tu DAW. PITCHY es un plugin.</dd>
+<dt>Semitono</dt><dd>El paso más pequeño entre dos notas del piano. Doce semitonos son una octava.</dd>
+<dt>Retraso (latencia, en «ms»)</dt><dd>Lo que tarda el sonido en salir después de entrar. Mil milisegundos son un segundo. Tu DAW lo compensa solo al reproducir, así que <strong>solo lo notas si cantas en directo</strong>.</dd>
+</dl>
+
+<h2 id="abrir">1. Instálalo y ábrelo</h2>
+<p>Descárgalo en la <a href="pitchy.html#descargar">página de PITCHY</a> e instálalo siguiendo la sección <a href="ayuda.html#instalar">Instalar de la ayuda</a>. Después, carga PITCHY en una pista de tu DAW: como <strong>VST3</strong> en Ableton Live, FL Studio y la mayoría de programas, y como <strong>AU</strong> en Logic Pro.</p>
+<p class="tip"><strong>Consejo:</strong> ponlo el <strong>primero</strong> en la pista, antes de otros efectos, y dale <strong>una sola voz limpia</strong>. Así detecta mejor la nota.</p>
+
+<h2 id="primera">2. La primera vez</h2>
+<p>Al abrirlo por primera vez, PITCHY te pregunta <strong>«What are you working on?»</strong> (en qué estás trabajando). Elige una opción y PITCHY lo deja listo para ese sonido:</p>
+<ul class="plain">
+<li><strong>Vocals</strong>: voces grabadas. Activa el algoritmo VOICE.</li>
+<li><strong>Sing live</strong>: cantar en directo. Activa el algoritmo LIVE.</li>
+<li><strong>Bass &amp; instruments</strong>: bajos e instrumentos. Activa el algoritmo PRO.</li>
+<li><strong>Drums</strong>: baterías y percusión. Activa el algoritmo DRUMS.</li>
+<li><strong>FX &amp; transitions</strong>: efectos y transiciones. No cambia el algoritmo: abre el panel de efectos (FX).</li>
+</ul>
+<p>Puedes cambiar el algoritmo cuando quieras (mira <a href="#algoritmo">«Qué algoritmo elegir»</a>). Si no quieres que PITCHY vuelva a preguntar, marca la casilla de esa misma pregunta. Los proyectos que ya tenías no la muestran.</p>
+
+<h2 id="prueba">3. Tu primera prueba (un minuto)</h2>
+<ol>
+<li>Reproduce una voz por la pista.</li>
+<li>Gira <strong>PITCH</strong>, la rueda de la izquierda: hacia la derecha sube el tono y hacia la izquierda lo baja. El número de la pantalla grande son semitonos.</li>
+<li>Si la voz suena rara al subirla o bajarla mucho, toca <strong>FORMANT</strong>, la rueda de la derecha: si subes PITCH, sube FORMANT un poco; si bajas PITCH, bájalo un poco.</li>
+<li>Pasa el ratón por encima de una rueda y su valor aparece en la pantalla grande.</li>
+</ol>
+<p>Si todavía no has pegado tu código, verás <strong>DEMO</strong> en la pantalla y un silencio de 3 segundos cada 45. Todo lo demás funciona, y <strong>la demo es gratis para siempre</strong>: no caduca ni hay una prueba de días. Para quitar los silencios, mira <a href="ayuda.html#activar">cómo activar PITCHY</a>.</p>
+
+<h2 id="algoritmo">4. Qué algoritmo elegir</h2>
+<p>El <strong>algoritmo</strong> es la forma en que PITCHY cambia el tono. Se elige con el botón de <strong>arriba a la derecha de la pantalla</strong> (donde pone PRO, VOICE…). Si dudas: <strong>VOICE para voces y PRO para todo lo demás.</strong></p>
+<ul class="plain">
+<li><strong>VOICE</strong> · retraso 62 ms · voces grabadas, acapellas y vocal chops. Suena natural y es el que abre por defecto.</li>
+<li><strong>LIVE</strong> · retraso 22 ms · cantar en directo a través del plugin. Tiene tan poco retraso que puedes cantar sin notarlo. No es para notas muy graves, como un 808: ahí usa PRO.</li>
+<li><strong>PRO</strong> · retraso 122 ms · bajos, acordes, sintes, mezclas y cualquier otro sonido. Es el de más calidad con sonidos complejos y graves profundos.</li>
+<li><strong>DRUMS</strong> · retraso 102 ms · baterías y percusión. Conserva la pegada de los golpes.</li>
+<li><strong>LO-FI</strong> · retraso 62 ms · efecto vintage, como un harmonizer o una cinta antigua. Aquí los formantes se mueven con el tono.</li>
+</ul>
+<p>VOICE y LIVE siguen <strong>una sola voz</strong> cada vez. Para acordes, mezclas o coros, usa PRO.</p>
+
+<h2 id="modos">5. Los tres modos</h2>
+<p>El <strong>modo</strong> se elige con el botón de <strong>arriba a la izquierda de la pantalla</strong> y decide qué hace PITCHY con el tono.</p>
+<ul class="plain">
+<li><strong>TRANSPOSE</strong>: sube o baja todo el sonido los semitonos que marque PITCH. Es el modo de siempre para cambiar el tono de una acapella, un sample o un bajo.</li>
+<li><strong>ROBOT</strong>: lleva la voz a <strong>una sola nota</strong>, la que elijas, en la octava más cercana a tu voz. Da la voz robótica plana.</li>
+<li><strong>QUANTIZE</strong>: es el <strong>autotune</strong>. Ajusta cada nota a la escala que elijas. En la pantalla ves la nota que entra.</li>
+</ul>
+<p><strong>Dónde se eligen la nota y la escala.</strong> En ROBOT y QUANTIZE aparece a la derecha de la pantalla un botón con la nota o la tonalidad (<em>NOTE</em> o <em>KEY</em>). Púlsalo:</p>
+<ul class="plain">
+<li>En ROBOT, eliges la <strong>nota</strong> a la que va la voz.</li>
+<li>En QUANTIZE, eliges la <strong>tonalidad</strong> y la <strong>escala</strong> (cromática, mayor o menor). Si no sabes la tonalidad de tu canción, elige <em>cromática</em>: sirve para cualquier canción, pero corrige a todas las notas.</li>
+<li>En QUANTIZE, ahí mismo está <strong>RETUNE MS</strong>, la velocidad con que corrige cada nota. Con <strong>0</strong> es instantáneo y suena el efecto duro y clásico; cuanto más alto, más natural.</li>
+</ul>
+<p>Con un poco de <strong>DRIVE</strong>, QUANTIZE da el sonido de voz pop o rap de siempre.</p>
+<p>En cualquier modo, si envías <strong>notas MIDI</strong> a PITCHY desde un teclado o un clip, la voz canta esas notas. Al soltar las teclas, vuelve a mandar el modo. ROBOT y QUANTIZE funcionan con una sola voz cada vez, no con acordes.</p>
+
+<h2 id="controles">6. Los controles</h2>
+<ul class="plain">
+<li><strong>PITCH</strong>: sube o baja el tono en semitonos, hasta ±36. Con el botón <em>±12 ST</em> de la pantalla eliges hasta dónde llega la rueda (±6, ±12, ±24 o ±36).</li>
+<li><strong>FORMANT</strong>: cambia el carácter de la voz sin tocar la nota. Hacia arriba, más ligera; hacia abajo, más profunda y con más cuerpo. Un valor de -1 a -3 calienta voces nasales y coros.</li>
+<li><strong>Enlace</strong> (el icono de cadena entre PITCH y FORMANT): mueve FORMANT junto con PITCH. Es útil para automatizar subidas sin que la voz cambie de carácter. Apágalo si quieres que el tono suene más natural.</li>
+<li><strong>FILTER</strong>: quita agudos (de 20 Hz a 20 kHz); al máximo no filtra. Bajarlo un poco suaviza las voces muy brillantes al subirlas.</li>
+<li><strong>DRIVE</strong>: saturación, de 0 a +24 dB, con el volumen compensado.</li>
+<li><strong>MIX</strong>: mezcla el sonido original con el procesado. Con 100 cambias el tono del todo; con menos, doblas la voz.</li>
+</ul>
+<h3>Atajos del ratón</h3>
+<ul class="plain">
+<li><strong>Cambiar una rueda:</strong> arrástrala o usa la rueda del ratón. Mantén <strong>Mayús</strong> (Shift) para ajustar más fino.</li>
+<li><strong>Doble clic en una rueda:</strong> vuelve a su valor inicial.</li>
+<li><strong>Clic derecho en una rueda:</strong> la bloquea, para que conserve su valor al cambiar de preset.</li>
+<li><strong>Escribir un valor exacto:</strong> haz doble clic en el número de la pantalla grande, escribe y pulsa <strong>Enter</strong>.</li>
+<li><strong>Doble clic en la pantalla, fuera del número:</strong> devuelve ese valor a su ajuste inicial.</li>
+</ul>
+
+<h2 id="efectos">7. Efectos</h2>
+<p>Los efectos empiezan <strong>plegados</strong>. Pulsa <strong>FX</strong>, arriba, para desplegar el panel, y otra vez para plegarlo.</p>
+<ul class="plain">
+<li>Con las flechas del panel eliges el efecto: <strong>Stutter</strong> (cortes rítmicos), <strong>Delay</strong> (ecos), <strong>Reverb</strong> (ambiente), <strong>Chorus</strong> y <strong>Flanger</strong> (modulación).</li>
+<li>La rueda de la izquierda cambia el ajuste propio de cada efecto (por ejemplo, <em>Size</em> en Reverb). <strong>AMOUNT</strong>, a la derecha, decide cuánto se oye.</li>
+<li><strong>Todos empiezan con AMOUNT en 0.</strong> En cuanto lo subes, el efecto suena y se enciende solo. Puedes combinar varios a la vez.</li>
+<li>Stutter y Delay pueden ir sincronizados con el tempo de la canción o libres.</li>
+</ul>
+<p>La pantalla grande muestra abajo los cinco efectos y señala los que suenan, con sus ajustes. Funciona aunque el panel esté plegado: haz clic en el <strong>puntito</strong> de un efecto para encenderlo o apagarlo, haz clic en su <strong>nombre</strong> para ver su AMOUNT en grande, o arrastra un <strong>valor</strong> hacia arriba o abajo.</p>
+
+<h2 id="presets">8. Presets</h2>
+<p>Un <strong>preset</strong> es un ajuste ya preparado. PITCHY trae <strong>17</strong>, ordenados por tipo de sonido. Se cambian con las flechas junto al nombre o haciendo clic en el nombre para ver la lista.</p>
+<ul class="plain">
+<li><strong>Voces:</strong> Deep Voice, Vocal Lift, Hard Tune, Warm Backing.</li>
+<li><strong>Efectos creativos:</strong> Robot Chop, Robot Voice, Double Up, Dirty Tune, Tape Slow.</li>
+<li><strong>Subidas (build ups):</strong> Build Up.</li>
+<li><strong>Bajos y sintes:</strong> Bass Octave, Synth Motion.</li>
+<li><strong>Baterías:</strong> Drum Crunch, Perc Flange.</li>
+<li><strong>Samples:</strong> Sample Echo, Sample Space.</li>
+<li><strong>Empezar de cero:</strong> Default.</li>
+</ul>
+<p><strong>Guardar tus ajustes:</strong> pulsa el icono del disco, junto al nombre del preset. Tus presets aparecen en <em>USER</em>. Si escribes <em>Carpeta/Nombre</em> (por ejemplo, <em>Voces/Mi voz</em>), se guardan dentro de esa carpeta.</p>
+
+<h2 id="ajustes">9. Ajustes (la rueda dentada)</h2>
+<ul class="plain">
+<li><strong>Apariencia:</strong> Snow, Midnight, Acid o Lime.</li>
+<li><strong>Tamaño de la ventana:</strong> 100, 125 o 150 %.</li>
+<li><strong>Mix Lock:</strong> mantiene tu valor de MIX al cambiar de preset.</li>
+<li><strong>Limiter:</strong> la salida nunca pasa de 0 dB, así que no satura.</li>
+<li><strong>Licencia:</strong> engranaje → <em>LICENSE</em> → <em>PASTE CODE</em>, y pegas el código que te llegó por email. Sin código, PITCHY funciona en modo demo.</li>
+<li><strong>Reset All:</strong> devuelve todos los ajustes a su valor inicial. Aparece el aviso <em>ALL RESET · CLICK TO UNDO</em>: si te equivocas, tienes unos 6 segundos para deshacerlo con un clic en él.</li>
+</ul>
+
+<h2 id="recetas">10. Tres recetas rápidas</h2>
+<ul class="plain">
+<li><strong>Cambiar el tono de una acapella:</strong> algoritmo <em>VOICE</em>, modo <em>TRANSPOSE</em> y gira PITCH.</li>
+<li><strong>Autotune pop:</strong> preset <em>Hard Tune</em> y elige la tonalidad de tu canción.</li>
+<li><strong>Subida de tensión:</strong> preset <em>Build Up</em> y automatiza PITCH en tu DAW.</li>
+</ul>
+
+<h2>¿Algo no va como esperas?</h2>
+<p>Mira la <a href="ayuda.html">página de ayuda</a>: tiene respuestas para instalar, activar, recuperar tu código y los problemas más comunes. Si no encuentras la tuya, escríbenos a <a href="mailto:support@soundtastics.com">support@soundtastics.com</a>.</p>
+</main>
+<footer><a class="brand footerBrand" href="index.html"><img class="companyLogo" src="assets/soundtastics-symbol.png" alt="">soundtastics</a><p>© 2026 Soundtastics</p><div class="storeLinks"><a href="aviso-legal.html">Aviso legal</a><a href="condiciones.html">Condiciones</a><a href="privacidad.html">Privacidad</a><a href="devoluciones.html">Devoluciones</a><a href="guia.html">Guía de inicio</a><a href="ayuda.html">Ayuda</a><a href="recuperar.html">Recuperar licencia</a><a href="mailto:hello@soundtastics.com">hello@soundtastics.com</a></div></footer>
+</body></html>
