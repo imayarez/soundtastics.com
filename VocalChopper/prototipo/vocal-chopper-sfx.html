@@ -100,6 +100,7 @@ select{background:rgba(255,255,255,.1);color:#fff;border:0;border-radius:4px;pad
 #dirs{left:420px;top:418px;width:396px;height:34px;display:grid;grid-template-columns:repeat(4,1fr) 72px;gap:4px}
 #dirs button{border:0;border-radius:5px;background:var(--blk);color:#fff;font:600 12.5px/1 Oswald,"Arial Narrow",Impact,sans-serif;cursor:pointer;box-shadow:0 0 0 2px var(--ink),0 3px 0 rgba(0,0,0,.35)}
 #dirs button.on{background:var(--y);color:var(--ink)}
+#dirs button:disabled{opacity:.35;cursor:default}
 #dirs #dLatch{margin-left:6px}
 #knobs{left:150px;width:680px;top:472px;height:180px;display:grid;grid-template-columns:repeat(5,1fr)}
 .kn{display:flex;flex-direction:column;align-items:center;position:relative}
@@ -799,12 +800,19 @@ window.VC={S};
  q('#modes').onclick=e=>{const b=e.target.closest('button');if(!b)return;const m=q('#m1 button[data-i="'+b.dataset.i+'"]');if(m)m.click();};
  const dirs=['FORWARD','REVERSE','PING-PONG','RANDOM'];
  q('#dirs').innerHTML=dirs.map((n,i)=>`<button data-v="${i}">${n}</button>`).join('')+'<button id="dLatch">LATCH ∞</button>';
- q('#dirs').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.id==='dLatch'){q('#bLatch').click();return;}
-  const S=window.VC&&VC.S;if(S&&S.sel>=0){q('#chipX').click();}const m=q('#m2 button[data-v="'+b.dataset.v+'"]');if(m)m.click();};
+ q('#dirs').onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;if(b.id==='dLatch'){q('#bLatch').click();return;}
+  const S=window.VC&&VC.S,i=+b.dataset.v;
+  if(S&&S.sel>=0){ // edición individual: FORWARD / REVERSE solo para este chop; repetir = volver a la global
+   if(i>1)return;const want=i===0?'FWD':'REV',cur=S.chops[S.sel].dir,v=cur===want?'null':want;
+   const m=q('#m2 button[data-v="'+v+'"]');if(m)m.click();return;}
+  const m=q('#m2 button[data-v="'+i+'"]');if(m)m.click();};
  q('#bAjustes').onclick=e=>{e.stopPropagation();q('#bSet').click();};
  const MODE_OF=t=>t.replace('-',' ');
  const sync=()=>{const t=MODE_OF(q('#t1').textContent);q('#modes').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.textContent===t));
-  const d=q('#t2').textContent;q('#dirs').querySelectorAll('button[data-v]').forEach(b=>b.classList.toggle('on',b.textContent===d));
+  const S=window.VC&&VC.S,selc=S&&S.sel>=0?S.chops[S.sel]:null,d=q('#t2').textContent;
+  q('#dirs').querySelectorAll('button[data-v]').forEach(b=>{const i=+b.dataset.v;
+   if(selc){b.disabled=i>1;b.classList.toggle('on',(i===0&&selc.dir==='FWD')||(i===1&&selc.dir==='REV'));b.title=i<2?'Dirección solo de este chop (vuelve a pulsar para usar la global)':'';}
+   else{b.disabled=false;b.classList.toggle('on',b.textContent===d);b.title='Dirección de reproducción';}});
   q('#dLatch').classList.toggle('on',q('#bLatch').classList.contains('on'));q('#bAjustes').classList.toggle('on',q('#ovSet').classList.contains('open'));};
  new MutationObserver(sync).observe(q('#panel'),{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class']});sync();
  const ENDS={stretch:['½×','2×'],pitch:['-12','+12'],size:['1/4','1/64'],artifacts:['CLEAN','CRUSH'],blur:['DRY','WET']};
