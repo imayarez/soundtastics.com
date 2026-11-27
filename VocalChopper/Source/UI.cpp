@@ -542,7 +542,7 @@ void WaveView::buildLayer (const SampleData& s)
         const int n = s.buf.getNumSamples();
         const float mid = TOP + (VH - TOP - BOT) / 2, hh = (VH - TOP - BOT) / 2 - 6;
 
-        // Onda por frecuencias (estilo CDJ): graves rosa-rojo, medios amarillo, agudos cian
+        // Onda por frecuencias (estilo CDJ): graves violeta, medios azul, agudos cian-hielo
         struct Bq2
         {
             double b0, b1, b2, a1, a2, x1 = 0, x2 = 0, y1 = 0, y2 = 0;
@@ -579,7 +579,7 @@ void WaveView::buildLayer (const SampleData& s)
             mL = std::max (mL, c.eL); mM = std::max (mM, c.eM); mH = std::max (mH, c.eH);
             cols.push_back (c);
         }
-        const float CL[3] { 255, 59, 107 }, CM[3] { 255, 210, 63 }, CH[3] { 127, 230, 255 };
+        const float CL[3] { 164, 92, 255 }, CM[3] { 63, 125, 255 }, CH[3] { 178, 246, 255 };
         for (auto& k : cols)
         {
             const float h = std::max (1.0f, std::pow (k.m, .8f) * hh), hr = std::max (.5f, std::pow (k.rms, .8f) * hh * 1.2f);

@@ -641,11 +641,11 @@ function sizeCanvas(){dpr=Math.min(2,window.devicePixelRatio||1)*Math.max(1,scal
 function buildLayer(){
  layer=document.createElement('canvas');layer.width=cv.width;layer.height=cv.height;const c=layer.getContext('2d');c.scale(dpr,dpr);
  const d0=S.chs[0],d1=S.chs[1],n=d0.length,mid=TOP+(VH-TOP-BOT)/2,hh=(VH-TOP-BOT)/2-6,step=3;
- // onda por frecuencias (estilo CDJ): graves rosa-rojo, medios amarillo, agudos cian
+ // onda por frecuencias (estilo CDJ): graves violeta, medios azul, agudos cian-hielo
  const SRb=S.buf.sampleRate,bq=(t,f)=>{const w=2*Math.PI*f/SRb,al=Math.sin(w)/(2*Math.SQRT1_2),cw=Math.cos(w),a0=1+al;const b0=t?(1+cw)/2:(1-cw)/2,b1=t?-(1+cw):1-cw;return new Bq([b0/a0,b1/a0,b0/a0,-2*cw/a0,(1-al)/a0]);};
  const fL=bq(0,200),fL2=bq(0,200),fH=bq(1,2500),fH2=bq(1,2500),LO=new Float32Array(n),HI=new Float32Array(n),MI=new Float32Array(n);
  for(let i=0;i<n;i++){const x=(d0[i]+d1[i])*.5,l=fL2.run(fL.run(x)),h=fH2.run(fH.run(x));LO[i]=l;HI[i]=h;MI[i]=x-l-h;}
- const CL=[255,59,107],CM=[255,210,63],CH=[127,230,255],cols=[];let mL=1e-9,mM=1e-9,mH=1e-9;
+ const CL=[164,92,255],CM=[63,125,255],CH=[178,246,255],cols=[];let mL=1e-9,mM=1e-9,mH=1e-9;
  for(let x=PADX;x<VW-PADX;x+=step){const a=Math.floor((x-PADX)/(VW-2*PADX)*n),b=Math.min(n,Math.floor((x+step-PADX)/(VW-2*PADX)*n));let m=0,s=0,eL=0,eM=0,eH=0;for(let i=a;i<b;i+=2){const v=Math.max(Math.abs(d0[i]),Math.abs(d1[i]));if(v>m)m=v;s+=v*v;eL+=LO[i]*LO[i];eM+=MI[i]*MI[i];eH+=HI[i]*HI[i];}
   eL=Math.sqrt(eL);eM=Math.sqrt(eM);eH=Math.sqrt(eH);mL=Math.max(mL,eL);mM=Math.max(mM,eM);mH=Math.max(mH,eH);cols.push({x,m,rms:Math.sqrt(s/Math.max(1,(b-a)/2)),eL,eM,eH});}
  for(const k of cols){
