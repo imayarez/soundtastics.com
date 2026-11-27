@@ -19,7 +19,7 @@ jobs:
       - name: Compilar (VST3 + Standalone)
         working-directory: VocalChopper
         run: |
-          cmake -B build -G "Visual Studio 17 2022" -A x64
+          cmake -B build -A x64
           cmake --build build --config Release --parallel
       - name: Validar el VST3 con pluginval
         continue-on-error: true
