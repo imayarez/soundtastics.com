@@ -64,17 +64,17 @@ export function licenceEmail (codes, downloadUrl)
     const list = codes.map ((c) => `<p style="font-family:monospace;font-size:14px;background:#f2f2f2;padding:10px;border-radius:6px;word-break:break-all">${c}</p>`).join ("");
     const html = `<div style="font-family:Arial,sans-serif;font-size:15px;color:#111;max-width:560px">
 <h2 style="margin:0 0 12px">Thank you for buying PITCHY!</h2>
-<p>Here is your licence code${many ? "s" : ""}:</p>${list}
+<p>Here is your license code${many ? "s" : ""}:</p>${list}
 <p><b>How to activate it</b></p>
 <ol><li>Install PITCHY from <a href="${downloadUrl}">${downloadUrl}</a> (if you have not yet).</li>
 <li>Copy the whole code above.</li>
 <li>Open PITCHY, click the gear (settings) &rarr; <b>LICENSE</b> &rarr; <b>PASTE CODE</b>.</li></ol>
 <p>The DEMO silences go away at once. The code works offline and on all your own computers. Keep this email.</p>
 <p>Any problem? Just reply to this email.</p><p>Soundtastics</p></div>`;
-    const text = `Thank you for buying PITCHY!\n\nYour licence code${many ? "s" : ""}:\n\n${codes.join ("\n\n")}\n\n`
+    const text = `Thank you for buying PITCHY!\n\nYour license code${many ? "s" : ""}:\n\n${codes.join ("\n\n")}\n\n`
                + `How to activate it:\n1. Install PITCHY from ${downloadUrl}\n2. Copy the whole code.\n3. Open PITCHY, click the gear -> LICENSE -> PASTE CODE.\n\n`
                + `The DEMO silences go away at once. The code works offline and on all your own computers. Keep this email.\n\nSoundtastics`;
-    return { subject: many ? "Your PITCHY licence codes" : "Your PITCHY licence code", html, text };
+    return { subject: many ? "Your PITCHY license codes" : "Your PITCHY license code", html, text };
 }
 
 async function sendEmail (to, mail)
