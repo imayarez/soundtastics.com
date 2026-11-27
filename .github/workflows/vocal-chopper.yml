@@ -1,0 +1,97 @@
+name: Vocal Chopper - compilar plugin
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'VocalChopper/Source/**'
+      - 'VocalChopper/CMakeLists.txt'
+      - '.github/workflows/vocal-chopper.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compilar (VST3 + Standalone)
+        working-directory: VocalChopper
+        run: |
+          cmake -B build -G "Visual Studio 17 2022" -A x64
+          cmake --build build --config Release --parallel
+      - name: Validar el VST3 con pluginval
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          Invoke-WebRequest https://github.com/Tracktion/pluginval/releases/download/v1.0.4/pluginval_Windows.zip -OutFile pv.zip
+          Expand-Archive pv.zip -DestinationPath pv
+          ./pv/pluginval.exe --strictness-level 5 --validate-in-process --skip-gui-tests --output-dir pvlog "VocalChopper/build/VocalChopper_artefacts/Release/VST3/Vocal Chopper.vst3"
+          if ($LASTEXITCODE -ne 0) { echo "PLUGINVAL FALLO"; exit 1 } else { echo "PLUGINVAL OK" }
+      - name: Empaquetar
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force out | Out-Null
+          Copy-Item -Recurse "VocalChopper/build/VocalChopper_artefacts/Release/VST3/Vocal Chopper.vst3" out/
+          Copy-Item "VocalChopper/build/VocalChopper_artefacts/Release/Standalone/Vocal Chopper.exe" out/
+          Compress-Archive -Path out/* -DestinationPath VocalChopper-Windows.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VocalChopper-Windows
+          path: VocalChopper-Windows.zip
+
+  mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compilar (VST3 + AU + Standalone, Intel y Apple Silicon)
+        working-directory: VocalChopper
+        run: |
+          cmake -B build -G Xcode -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+          cmake --build build --config Release --parallel -- -quiet
+      - name: Firma local (ad-hoc)
+        run: |
+          A=VocalChopper/build/VocalChopper_artefacts/Release
+          codesign --force --deep -s - "$A/VST3/Vocal Chopper.vst3"
+          codesign --force --deep -s - "$A/AU/Vocal Chopper.component"
+          codesign --force --deep -s - "$A/Standalone/Vocal Chopper.app"
+      - name: Validar el AU con auval
+        continue-on-error: true
+        run: |
+          mkdir -p ~/Library/Audio/Plug-Ins/Components
+          cp -R "VocalChopper/build/VocalChopper_artefacts/Release/AU/Vocal Chopper.component" ~/Library/Audio/Plug-Ins/Components/
+          killall -9 AudioComponentRegistrar || true
+          sleep 3
+          auval -v aumu Vchp Sndt | tail -40
+      - name: Empaquetar
+        run: |
+          A=VocalChopper/build/VocalChopper_artefacts/Release
+          mkdir out
+          cp -R "$A/VST3/Vocal Chopper.vst3" "$A/AU/Vocal Chopper.component" "$A/Standalone/Vocal Chopper.app" out/
+          cd out && ditto -c -k --keepParent . ../VocalChopper-Mac.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VocalChopper-Mac
+          path: VocalChopper-Mac.zip
+
+  guardar:
+    needs: [windows, mac]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/download-artifact@v4
+        with:
+          path: dl
+      - name: Guardar los ZIP en la rama
+        run: |
+          mkdir -p VocalChopper/builds
+          cp dl/VocalChopper-Windows/VocalChopper-Windows.zip dl/VocalChopper-Mac/VocalChopper-Mac.zip VocalChopper/builds/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add VocalChopper/builds
+          git commit -m "Vocal Chopper: binarios compilados (${GITHUB_SHA::7})"
+          git pull --rebase origin ${{ github.ref_name }}
+          git push origin HEAD:${{ github.ref_name }}
