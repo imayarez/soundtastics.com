@@ -1,7 +1,7 @@
 # Vocal Chopper · Soundtastics — plugin
 
 ## Instalar en Windows (Ableton)
-1. Abre `VocalChopper-Windows.zip`.
+1. Entra en la carpeta **Windows** de este ZIP.
 2. Copia la carpeta **`Vocal Chopper.vst3`** en `C:\Program Files\Common Files\VST3\`
    (Windows te pedirá permiso de administrador: acepta).
 3. En Ableton: *Preferencias → Plug-ins* → activa "Usar carpeta del sistema VST3" y pulsa **Re-escanear**.
@@ -11,7 +11,7 @@
 `Vocal Chopper.exe` es la versión independiente (sin Ableton), útil para probar rápido.
 
 ## Instalar en Mac
-1. Abre `VocalChopper-Mac.zip`.
+1. Entra en la carpeta **Mac** de este ZIP.
 2. Copia `Vocal Chopper.vst3` en `~/Librería/Audio/Plug-Ins/VST3/` y `Vocal Chopper.component` en
    `~/Librería/Audio/Plug-Ins/Components/`.
 3. Como todavía no está firmado con un certificado de Apple, la primera vez abre la app *Terminal* y pega:
