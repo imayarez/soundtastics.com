@@ -140,6 +140,81 @@ select{background:rgba(255,255,255,.08);color:#fff;border:0;border-radius:6px;pa
 #toast.show{opacity:1}
 #help{max-width:980px;margin:0 auto;padding:0 16px 30px;color:rgba(20,32,94,.6);font-size:12px;line-height:1.6}
 #help b{color:var(--ink);font-weight:600}
+
+/* ===== v2: plano, sin brillos ni degradados ===== */
+:root{--paper:#ecebe6;--paper2:#e3e2dc;--rule:#cfcdc5;--ink:#111318;--mut:#6d6f76;--blue:#2448e6;--blue2:#2448e6}
+html,body{background:#d8d7d1;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+#panel{border-radius:14px;background:var(--paper);box-shadow:0 1px 0 #fff inset,0 0 0 1px #c6c4bb,0 18px 40px rgba(0,0,0,.18)}
+#logo{border-radius:6px;background:var(--blue);box-shadow:none;width:38px;height:38px;top:22px}
+#title{top:22px;font-size:21px;font-weight:800;letter-spacing:-.01em;color:var(--ink)}
+#title b{font-weight:800;color:var(--blue)}
+#sub{top:47px;font:500 9px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.08em;color:var(--mut)}
+.tb{border-radius:4px;font:600 10px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;height:32px;top:24px;border:1px solid var(--rule)}
+.tb:hover{background:var(--paper2)}
+.tb svg{stroke:var(--ink);width:14px;height:14px}
+#bLib{left:396px}#bImp{left:508px}
+#lcd{left:640px;top:22px;width:138px;height:36px;border-radius:4px;background:#0d0e12;box-shadow:none}
+#lcd .big{color:#fff;font-weight:500}
+#lcd small{color:rgba(255,255,255,.5)}
+#bRender{border-radius:4px;height:36px;top:22px;width:158px;background:var(--blue);box-shadow:none;padding:0 14px 0 8px;gap:9px;font:700 10px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em}
+#bRender:hover{background:#1c3cd0}
+#bRender .dot{width:22px;height:22px;background:transparent;border:1.5px solid #fff}
+#bRender svg.prog{inset:-4px;width:28px;height:28px}
+#rIco{stroke:#fff;width:12px;height:12px}
+#bRender.ready{background:var(--acc);box-shadow:none}
+#bRender.ready .dot{border-color:var(--ink)}
+#display{top:74px;height:306px;border-radius:8px;background:#0b0c10;box-shadow:none}
+#tabs{top:74px;height:46px;justify-content:flex-start;padding-left:18px;gap:2px;border-bottom:1px solid rgba(255,255,255,.07)}
+#tabs button{font:500 10.5px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.04em;color:rgba(255,255,255,.45);padding:10px 12px;border-radius:3px}
+#tabs button .n{color:rgba(255,255,255,.28);margin-right:6px}
+#tabs button.on{color:#fff;background:rgba(255,255,255,.07)}
+#tabs button.on .n{color:var(--blue);color:#6f8cff}
+#tabs button.on::after{display:none}
+#screen{top:121px;height:252px;width:924px;border-radius:0 0 8px 8px}
+#knobs{top:392px;height:180px;grid-template-columns:236px repeat(4,1fr)}
+#k_size{border-right:1px solid var(--rule);height:180px;justify-content:center}
+.kn+.kn::before{display:block;content:"";position:absolute;left:0;top:30px;bottom:30px;width:1px;background:var(--rule);box-shadow:none}
+#k_size::before,#k_stretch::before{display:none!important}
+#k_artifacts::before{display:block}
+.ico{display:none}
+.kw{width:84px;height:84px}
+.trk{stroke:#d3d1c9;stroke-width:3}
+.arc{stroke:var(--blue);stroke-width:3;stroke-linecap:butt;filter:none}
+.arc2{stroke:#2bb3d6}
+.kn.chop .arc{stroke:#e0a800;filter:none}
+.cap{left:17px;top:17px;width:50px;height:50px;background:#f7f6f2;box-shadow:0 0 0 1px #c9c7bf,0 2px 0 #c9c7bf}
+.cap i{background:var(--ink);top:5px;height:12px;width:2px;margin-left:-1px;border-radius:0}
+.kl{font:700 10px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;margin-top:12px}
+.kv{font-size:9.5px;color:var(--mut)}
+#k_size .kw{width:160px;height:160px}
+#k_size .kw::before{display:none}
+#k_size .cap{left:24px;top:24px;width:112px;height:112px;box-shadow:0 0 0 1px #c9c7bf,0 3px 0 #c9c7bf}
+#k_size .cap i{background:var(--blue);top:8px;height:18px;width:3px;margin-left:-1.5px}
+#k_size .kl{position:static;font-size:11px;margin-top:8px}
+#k_size .kv{position:static;width:auto;font-size:9.5px;color:var(--mut)}
+#k_size .kw{width:140px;height:140px}
+#k_size .cap{left:21px;top:21px;width:98px;height:98px}
+#bar{border-top:1px solid var(--rule);bottom:14px}
+#trans .hw{border-radius:4px;width:38px;height:38px;background:#f7f6f2;box-shadow:0 0 0 1px #c9c7bf,0 2px 0 #c9c7bf}
+#trans .hw:active{transform:translateY(2px);box-shadow:0 0 0 1px #c9c7bf}
+#bPlay.on{background:var(--blue);box-shadow:0 0 0 1px #1c3cd0,0 2px 0 #1530a8}
+.on .led{box-shadow:none}#bRec.on .led{box-shadow:none}
+.sel{border-radius:4px;background:#f7f6f2;box-shadow:0 0 0 1px #c9c7bf;height:38px;top:12px}
+.sel>button{height:38px}
+.sel .nm{font:700 10px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em}
+.sw{font:700 10px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;top:19px}
+.sw i{border-radius:3px;width:38px;height:20px;background:#d3d1c9}
+.sw i::after{border-radius:2px;width:16px;height:16px;top:2px;left:2px;box-shadow:none}
+.sw.on i::after{left:20px}
+#bAjustes{border-radius:4px;font:700 10px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;height:38px;top:12px}
+#bAjustes:hover,#bAjustes.on{background:var(--paper2);color:var(--ink)}
+.silk{font:700 10px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em}
+.io .cap{left:11px;top:11px;width:30px;height:30px}
+.menu{border-radius:6px;box-shadow:0 0 0 1px #c9c7bf,0 10px 24px rgba(0,0,0,.15);background:#f7f6f2}
+.menu button{border-radius:3px;font:700 10px/1.2 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.04em}
+.menu button:hover,.menu button.on{background:var(--ink);color:#fff}
+#toast{border-radius:4px;background:#111318;color:#fff;box-shadow:none;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px}
+#chip{border-radius:3px}#rollTag{border-radius:3px}
 </style></head><body>
 <div id="stage">
 <div id="panel">
@@ -687,7 +762,7 @@ function draw(){
  requestAnimationFrame(draw);
  if(!S.buf)return;if(peaksDirty)buildLayer();
  const c=g2;c.setTransform(dpr,0,0,dpr,0,0);
- const bg=c.createLinearGradient(0,0,0,VH);bg.addColorStop(0,'#070a18');bg.addColorStop(1,'#05070f');c.fillStyle=bg;c.fillRect(0,0,VW,VH);
+ const bg=c.createLinearGradient(0,0,0,VH);bg.addColorStop(0,'#0b0c10');bg.addColorStop(1,'#0b0c10');c.fillStyle=bg;c.fillRect(0,0,VW,VH);
  const ph=playheadPos(),cur=ph?chopAt(ph.p):-1,mid=TOP+(VH-TOP-BOT)/2;
  S.chops.forEach((ch,i)=>{const a=X(ch.s),b=X(ch.e);c.fillStyle=i===S.sel?'rgba(255,210,63,.13)':i===cur?'rgba(127,230,255,.09)':i%2?'rgba(255,255,255,.025)':'rgba(255,255,255,0)';c.fillRect(a,TOP-8,b-a,VH-TOP-BOT+16);});
  c.strokeStyle='rgba(255,255,255,.06)';c.beginPath();c.moveTo(PADX,mid);c.lineTo(VW-PADX,mid);c.stroke();
@@ -792,9 +867,9 @@ initKnobs();fit();loadPatch(0);uiSet();draw();
 // Piel clara: pestañas de modos, interruptor Latch y botón de ajustes conectados a los controles del motor
 (function(){
  const q=s=>document.querySelector(s),tabs=q('#tabs'),names=['STRAIGHT','STUTTER','BUILD-UP','TRIPLETS','GLITCH','CHOP SEQ'];
- tabs.innerHTML=names.map((n,i)=>`<button data-i="${i}">${n}</button>`).join('');
+ tabs.innerHTML=names.map((n,i)=>`<button data-i="${i}"><span class="n">0${i+1}</span><span class="t">${n}</span></button>`).join('');
  tabs.onclick=e=>{const b=e.target.closest('button');if(!b)return;const m=q('#m1 button[data-i="'+b.dataset.i+'"]');if(m)m.click();};
- const sync=()=>{const t=q('#t1').textContent;tabs.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.textContent===t));q('#swLatch').classList.toggle('on',q('#bLatch').classList.contains('on'));q('#bAjustes').classList.toggle('on',q('#ovSet').classList.contains('open'));};
+ const sync=()=>{const t=q('#t1').textContent;tabs.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.querySelector('.t').textContent===t));q('#swLatch').classList.toggle('on',q('#bLatch').classList.contains('on'));q('#bAjustes').classList.toggle('on',q('#ovSet').classList.contains('open'));};
  new MutationObserver(sync).observe(q('#panel'),{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class']});sync();
  q('#swLatch').onclick=()=>q('#bLatch').click();
  q('#bAjustes').onclick=e=>{e.stopPropagation();q('#bSet').click();};
