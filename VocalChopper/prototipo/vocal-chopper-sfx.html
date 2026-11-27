@@ -129,6 +129,19 @@ select{background:rgba(255,255,255,.1);color:#fff;border:0;border-radius:4px;pad
 #toast.show{opacity:1}
 #help{max-width:980px;margin:0 auto;padding:0 16px 30px;color:rgba(255,255,255,.6);font:13px/1.6 "Helvetica Neue",Arial,sans-serif}
 #help b{color:#fff}
+/* mandos: cuerpo, sombra y luz FIJOS; solo gira el moleteado y la marca */
+.cap{background:none!important;box-shadow:none!important}
+.kbase{position:absolute;border-radius:50%;pointer-events:none;
+ background:radial-gradient(circle at 50% 50%,#d92a2e 0%,#c11e23 55%,#a1161b 100%);
+ box-shadow:0 0 0 3px rgba(0,0,0,.32),0 0 0 4px rgba(255,255,255,.12),0 4px 0 #5e090c,0 9px 9px rgba(0,0,0,.38)}
+.kn.chop .kbase{background:radial-gradient(circle at 50% 50%,#ffd84a 0%,#f2bf1d 55%,#c99a00 100%);box-shadow:0 0 0 3px rgba(0,0,0,.32),0 0 0 4px rgba(255,255,255,.12),0 4px 0 #7a5d00,0 9px 9px rgba(0,0,0,.38)}
+.kgloss{position:absolute;border-radius:50%;pointer-events:none;z-index:3;
+ background:radial-gradient(ellipse 60% 45% at 36% 26%,rgba(255,255,255,.42),rgba(255,255,255,0) 70%),radial-gradient(circle at 50% 50%,rgba(0,0,0,0) 62%,rgba(0,0,0,.28) 100%);
+ box-shadow:inset 0 -3px 5px rgba(0,0,0,.25),inset 0 2px 2px rgba(255,255,255,.28)}
+.cap::before{display:none}
+.cap::after{inset:3px;background:repeating-conic-gradient(rgba(0,0,0,.26) 0 2.5deg,rgba(255,255,255,.05) 2.5deg 5deg);-webkit-mask:radial-gradient(circle,transparent 64%,#000 66%);mask:radial-gradient(circle,transparent 64%,#000 66%)}
+.cap i{background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.kn.chop .cap i{background:var(--ink);box-shadow:none}
 </style><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
 </head><body>
 <div id="stage">
@@ -815,6 +828,8 @@ window.VC={S};
    else{b.disabled=false;b.classList.toggle('on',b.textContent===d);b.title='Dirección de reproducción';}});
   q('#dLatch').classList.toggle('on',q('#bLatch').classList.contains('on'));q('#bAjustes').classList.toggle('on',q('#ovSet').classList.contains('open'));};
  new MutationObserver(sync).observe(q('#panel'),{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class']});sync();
+ document.querySelectorAll('.kw').forEach(w=>{const c=w.querySelector('.cap');if(!c)return;const g=(cls)=>{const d=document.createElement('div');d.className=cls;d.style.cssText=`left:${c.offsetLeft}px;top:${c.offsetTop}px;width:${c.offsetWidth}px;height:${c.offsetHeight}px`;return d;};
+  w.insertBefore(g('kbase'),c);w.appendChild(g('kgloss'));});
  const ENDS={stretch:['½×','2×'],pitch:['-12','+12'],size:['1/4','1/64'],artifacts:['CLEAN','CRUSH'],blur:['DRY','WET']};
  document.querySelectorAll('.kw').forEach(w=>{const k=w.dataset.k,svg=w.querySelector('svg');let t='';
   for(let j=0;j<=10;j++){const a=(-135+27*j-90)*Math.PI/180,r1=47,r2=j%5===0?57:54;t+=`<line class="tick" x1="${50+r1*Math.cos(a)}" y1="${50+r1*Math.sin(a)}" x2="${50+r2*Math.cos(a)}" y2="${50+r2*Math.sin(a)}"/>`;}
