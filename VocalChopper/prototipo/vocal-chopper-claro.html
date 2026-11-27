@@ -221,6 +221,20 @@ html,body{background:#d8d7d1;font-family:"Helvetica Neue",Helvetica,Arial,sans-s
 #frame{left:28px;top:74px;width:924px;height:306px;border-radius:8px;pointer-events:none;z-index:2;
  box-shadow:inset 0 5px 12px rgba(0,0,0,.75),inset 0 1px 0 rgba(0,0,0,.9),inset 0 -1px 0 rgba(255,255,255,.07),inset 1px 0 0 rgba(255,255,255,.03),inset -1px 0 0 rgba(255,255,255,.03);
  background:linear-gradient(172deg,rgba(255,255,255,.045) 0%,rgba(255,255,255,.012) 28%,transparent 29%),radial-gradient(120% 90% at 50% 45%,transparent 60%,rgba(0,0,0,.35) 100%)}
+
+/* ===== hueco fisico: paredes visibles, sombra proyectada y cristal grueso ===== */
+#walls{left:14px;top:66px;width:952px;height:328px;border-radius:18px;border:14px solid;pointer-events:none;
+ border-top-color:#9c9a91;border-left-color:#bdbbb2;border-right-color:#b4b2a9;border-bottom-color:#e2e1da;
+ box-shadow:0 -1px 0 #b3b1a8,0 1px 0 #ffffff,0 -2px 3px rgba(0,0,0,.12)}
+#walls::after{content:"";position:absolute;inset:-14px;border-radius:18px;pointer-events:none;
+ background:linear-gradient(180deg,rgba(0,0,0,.25),transparent 12%,transparent 88%,rgba(255,255,255,.08));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:14px}
+#display{top:80px;height:300px;border-radius:4px;box-shadow:none}
+#tabs{top:80px}#screen{top:127px}#frame{top:80px;height:300px}
+#frame{border-radius:4px;
+ box-shadow:inset 0 22px 22px -10px rgba(0,0,0,.92),inset 0 2px 0 rgba(0,0,0,1),inset 14px 0 16px -12px rgba(0,0,0,.75),inset -14px 0 16px -12px rgba(0,0,0,.75),inset 0 -10px 14px -10px rgba(0,0,0,.5);
+ background:linear-gradient(176deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.025) 18%,transparent 18.5%),linear-gradient(0deg,rgba(255,255,255,.035),transparent 6%)}
+#knobs{top:404px;height:176px}
 </style></head><body>
 <div id="stage">
 <div id="panel">
@@ -232,6 +246,7 @@ html,body{background:#d8d7d1;font-family:"Helvetica Neue",Helvetica,Arial,sans-s
  <input type="file" id="file" accept="audio/*,.wav,.mp3,.aiff,.aif,.flac,.ogg" hidden>
  <div id="lcd" class="abs" title="Arrastra arriba/abajo para cambiar el tempo (en el plugin sigue al DAW)"><span class="big" id="bpmV">120.0</span><small>BPM<br><span id="srcV">—</span></small></div>
  <button id="bRender" class="abs" draggable="false" title="Renderiza el resultado. Cuando esté listo, arrástralo a una pista o haz clic para descargar"><span class="dot"><svg class="prog" viewBox="0 0 44 44"><circle id="progC" cx="22" cy="22" r="20" fill="none" stroke-width="3" stroke-dasharray="125.7" stroke-dashoffset="125.7"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" id="rIco"><path d="M3 12h3l2-6 4 12 3-9 2 3h4"/></svg></span><span id="rTxt">RENDER FILE</span></button>
+ <div id="walls" class="abs"></div>
  <div id="display" class="abs"></div>
  <div id="tabs" class="abs"></div>
  <div id="screen" class="abs">
