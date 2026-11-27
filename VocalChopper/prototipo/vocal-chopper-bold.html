@@ -138,6 +138,14 @@ select{background:rgba(255,255,255,.08);color:#fff;border:0;border-radius:4px;pa
 #toast.show{opacity:1}
 #help{max-width:980px;margin:0 auto;padding:0 16px 30px;color:rgba(255,255,255,.6);font-size:12px;line-height:1.6}
 #help b{color:#fff}
+/* escala impresa y extremos rotulados */
+.kw svg{overflow:visible}
+.tick{stroke:rgba(255,255,255,.55);stroke-width:1.6}
+.tick.major{stroke:#fff;stroke-width:2.2}
+.ends{position:absolute;top:84px;width:124px;display:flex;justify-content:space-between;font:700 8.5px/1 ui-monospace,Menlo,Consolas,monospace;color:rgba(255,255,255,.55);pointer-events:none}
+.kn .kl{margin-top:16px}
+.cap::before{content:"";position:absolute;inset:7px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+#pads button.cur{transition:none}
 </style></head><body>
 <div id="stage">
 <div id="panel">
@@ -787,7 +795,7 @@ let scale=1;
 function fit(){scale=Math.min(1,(window.innerWidth-16)/980);$('#panel').style.transform=`scale(${scale})`;$('#stage').style.height=(660*scale+28)+'px';sizeCanvas();}
 window.addEventListener('resize',fit);
 initKnobs();fit();loadPatch(0);uiSet();draw();
-window.VC={S,press,release,playheadPos,chopAt};
+window.VC={S,press,release,playheadPos,chopAt,now:()=>ctx?ctx.currentTime:0};
 }
 </script>
 <script>
@@ -807,7 +815,15 @@ window.VC={S,press,release,playheadPos,chopAt};
   b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);window.VC&&VC.press(i);});
   const up=()=>{window.VC&&VC.release(i);};b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up);});
  (function tick(){requestAnimationFrame(tick);if(!window.VC)return;const S=VC.S,ph=VC.playheadPos(),cur=ph?VC.chopAt(ph.p):-1;
-  pads.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('off',i>=S.chops.length);b.classList.toggle('cur',i===cur);b.classList.toggle('sel',i===S.sel&&i!==cur);});})();
+  let fl=1;if(ph&&ph.roll){const r=ph.roll,f=(((VC.now()-r.t0)%r.d)+r.d)%r.d/r.d;fl=1-.55*Math.min(1,f*1.6);}
+  pads.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('off',i>=S.chops.length);b.classList.toggle('cur',i===cur);b.classList.toggle('sel',i===S.sel&&i!==cur);b.style.opacity=i===cur?fl:'';});})();
+ // escala impresa alrededor de cada macro + extremos rotulados
+ const ENDS={stretch:['½×','2×'],pitch:['-12','+12'],size:['1/4','1/64'],artifacts:['CLEAN','CRUSH'],blur:['DRY','WET']};
+ document.querySelectorAll('#knobs .kw').forEach(w=>{const k=w.dataset.k,svg=w.querySelector('svg');let t='';
+  for(let j=0;j<=10;j++){const a=(-135+27*j-90)*Math.PI/180,mj=j%5===0,r1=50,r2=mj?56:54;t+=`<line class="tick${mj?' major':''}" x1="${50+r1*Math.cos(a)}" y1="${50+r1*Math.sin(a)}" x2="${50+r2*Math.cos(a)}" y2="${50+r2*Math.sin(a)}"/>`;}
+  svg.insertAdjacentHTML('afterbegin',t);
+  if(ENDS[k])w.insertAdjacentHTML('beforeend',`<div class="ends" style="left:${(w.offsetWidth-124)/2}px"><span>${ENDS[k][0]}</span><span>${ENDS[k][1]}</span></div>`);});
+
 })();
 </script>
 </body></html>
