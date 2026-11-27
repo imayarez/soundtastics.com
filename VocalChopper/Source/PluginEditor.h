@@ -32,28 +32,25 @@ private:
     void timerCallback() override;
     void paintPanel (juce::Graphics&);
     void setupKnobs();
-    void refreshSelectors();
-    void openMenu (int which);
-    void closeMenu();
-    void stepSel (int which, int d);
+    void refreshButtons();
     void afterLoad (const juce::String& msg);
     juce::String knobText (int k);
     void showSettings (bool show);
     void showLibrary (bool show);
+    void pickDirection (int i);
 
     VocalChopperProcessor& proc;
     ui::Look look;
     Panel panel;
-    ui::HwButton bPlay, bStop, bRec, bLib, bImp;
+    ui::BlackButton bLib, bImp, bPlay, bStop, bRec, bAjustes, bLatch;
+    std::array<std::unique_ptr<ui::BlackButton>, 6> modeBtn;
+    std::array<std::unique_ptr<ui::BlackButton>, 4> dirBtn;
     ui::Lcd lcd;
     ui::RenderButton render;
     ui::WaveView wave;
     ui::SettingsOverlay setOv;
     ui::LibraryOverlay libOv;
     std::array<std::unique_ptr<ui::Knob>, 7> knobs; // stretch, pitch, size, artifacts, blur, in, out
-    ui::Selector sel1, sel2;
-    ui::MenuList menu;
-    int menuWhich = 0;
     ui::Toast toastC;
     juce::TooltipWindow tips { this, 600 };
     std::unique_ptr<juce::FileChooser> chooser;

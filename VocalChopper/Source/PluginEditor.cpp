@@ -5,37 +5,24 @@ using namespace vc;
 
 namespace
 {
-const char* kSvgPlay  = R"(<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z" fill="#ffffff"/></svg>)";
-const char* kSvgStop  = R"(<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><rect x="1.5" y="1.5" width="11" height="11" rx="2" fill="#ffffff"/></svg>)";
-const char* kSvgRec   = R"(<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" fill="none" stroke="#ff8a98" stroke-width="2.2"/></svg>)";
-const char* kSvgLib   = R"(<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="4" height="16" rx="1"/><rect x="9" y="4" width="4" height="16" rx="1"/><path d="M15.5 5.2l3.8-1 4 15.4-3.8 1z"/></svg>)";
-const char* kSvgImp   = R"(<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M4 19h16"/></svg>)";
-const char* kSvgSet   = R"(<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>)";
-const char* kSvgLatch = R"(<svg xmlns="http://www.w3.org/2000/svg" width="22" height="14" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 7c-2.5-3-4-5-7-5a5 5 0 000 10c3 0 4.5-2 7-5s4-5 7-5a5 5 0 010 10c-3 0-4.5-2-7-5z"/></svg>)";
-const char* kSvgLogo  = R"(<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"><path d="M4 12h2M8 8v8M12 5v14M16 9v6M20 12h0"/></svg>)";
+const char* kSvgPlay  = R"(<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M7 4.4v19.2l15.8-9.6z" fill="currentColor"/></svg>)";
+const char* kSvgStop  = R"(<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect x="2" y="2" width="16" height="16" rx="3" fill="currentColor"/></svg>)";
+const char* kSvgRec   = R"(<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="#ff4d5a" stroke-width="3.6"/></svg>)";
+const char* kSvgLib   = R"(<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="4" height="16" rx="1"/><rect x="9" y="4" width="4" height="16" rx="1"/><path d="M15.5 5.2l3.8-1 4 15.4-3.8 1z"/></svg>)";
+const char* kSvgImp   = R"(<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M4 19h16"/></svg>)";
+const char* kSvgSet   = R"(<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>)";
 
-String knobSvg (const char* body)
-{
-    return String (R"(<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">)")
-           + body + "</svg>";
-}
-const char* kKnobIco[5] = {
-    R"(<path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/>)",
-    R"(<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>)",
-    R"(<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/>)",
-    R"(<path d="M3 13l3-6 3 9 3-11 3 13 3-8 3 3"/>)",
-    R"(<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7" stroke-dasharray="2 3"/><circle cx="12" cy="12" r="10.5" stroke-dasharray="1 4"/>)" };
 const char* kKnobId[7] = { "stretch", "pitch", "size", "artifacts", "blur", "in", "out" };
 const char* kKnobLabel[5] = { "STRETCH", "PITCH", "SIZE", "ARTIFACTS", "BLUR" };
+const char* kEnds[5][2] = { { "\xc2\xbd\xc3\x97", "2\xc3\x97" }, { "-12", "+12" }, { "1/4", "1/64" }, { "CLEAN", "CRUSH" }, { "DRY", "WET" } };
 const float kKnobDef[7] = { .5f, .5f, .4f, 0.0f, .15f, .5f, .75f };
+const char* kModes[6] = { "STRAIGHT", "STUTTER", "BUILD UP", "TRIPLETS", "GLITCH", "CHOP SEQ" };
 
-std::vector<std::unique_ptr<Drawable>>& knobIcons()
-{
-    static std::vector<std::unique_ptr<Drawable>> v;
-    if (v.empty()) for (auto* b : kKnobIco) v.push_back (ui::icon (knobSvg (b)));
-    return v;
-}
-std::unique_ptr<Drawable>& logoIcon() { static auto d = ui::icon (kSvgLogo); return d; }
+// caja visible (como en el prototipo) -> limites del componente (anillo negro + sombra)
+Rectangle<int> hb (int x, int y, int w, int h) { return { x - 2, y - 2, w + 4, h + 7 }; }
+
+constexpr float kKnobY = 537.0f;              // centro vertical de los macros
+float knobCx (int c) { return 150.0f + 136.0f * c + 68.0f; }
 
 const String dot = String::fromUTF8 (" \xc2\xb7 ");
 }
@@ -44,30 +31,22 @@ const String VocalChopperEditor::keyMap = "awsedftgyhujkolp;";
 
 VocalChopperEditor::VocalChopperEditor (VocalChopperProcessor& p)
     : AudioProcessorEditor (p), proc (p),
-      bPlay (kSvgPlay), bStop (kSvgStop), bRec (kSvgRec), bLib (kSvgLib, ui::HwButton::round), bImp (kSvgImp),
-      lcd (p), render (p), wave (p), setOv (p), libOv (p), sel1 (kSvgSet), sel2 (kSvgLatch)
+      bLib ({}, kSvgLib), bImp ("IMPORTAR", kSvgImp),
+      bPlay ({}, kSvgPlay), bStop ({}, kSvgStop), bRec ({}, kSvgRec),
+      bAjustes ("AJUSTES", kSvgSet), bLatch (U8 ("LATCH \xe2\x88\x9e"), {}, 12.5f),
+      lcd (p), render (p), wave (p), setOv (p), libOv (p)
 {
+    bLib.text = U8 ("LIBRER\xc3\x8d" "A");
     setLookAndFeel (&look);
     addAndMakeVisible (panel);
     panel.painter = [this] (Graphics& g) { paintPanel (g); };
 
-    for (auto* b : { &bPlay, &bStop, &bRec, &bLib, &bImp }) panel.addAndMakeVisible (*b);
-    bPlay.hasLed = bStop.hasLed = bRec.hasLed = true;
-    bRec.ledRed = true;
-    bPlay.setBounds (36, 86, 58, 46);
-    bStop.setBounds (102, 86, 58, 46);
-    bRec.setBounds (168, 86, 58, 46);
-    bLib.setBounds (906, 22, 44, 48);
-    bImp.setBounds (26, 599, 44, 48);
-    bPlay.setTooltip ("Play (espacio). Dentro del DAW tambien arranca solo con el transporte");
-    bStop.setTooltip ("Stop");
-    bRec.setTooltip (U8 ("Grabar la entrada de audio del canal (o el micr\xc3\xb3" "fono en la versi\xc3\xb3n Standalone)"));
+    // ---- cabecera
+    for (auto* b : { &bLib, &bImp }) panel.addAndMakeVisible (*b);
+    bLib.setBounds (hb (666, 20, 118, 36));
+    bImp.setBounds (hb (792, 20, 118, 36));
     bLib.setTooltip (U8 ("Librer\xc3\xad" "a de f\xc3\xa1" "brica"));
     bImp.setTooltip ("Importar audio (.wav .mp3 .aiff .flac .ogg)");
-
-    bPlay.onClick = [this] { proc.togglePlay(); };
-    bStop.onClick = [this] { proc.stopAll(); };
-    bRec.onClick = [this] { String m; proc.toggleRecord (m); if (m.isNotEmpty()) afterLoad (m); };
     bLib.onClick = [this] { showLibrary (! libOv.isVisible()); };
     bImp.onClick = [this]
     {
@@ -79,24 +58,52 @@ VocalChopperEditor::VocalChopperEditor (VocalChopperProcessor& p)
         });
     };
 
+    // ---- columna izquierda: transporte
+    for (auto* b : { &bPlay, &bStop, &bRec }) panel.addAndMakeVisible (*b);
+    bPlay.setBounds (hb (32, 276, 86, 84));
+    bStop.setBounds (hb (32, 370, 86, 56));
+    bRec.setBounds (hb (32, 436, 86, 56));
+    bRec.onColour = ui::c::rec;
+    bPlay.setTooltip ("Play (espacio). Dentro del DAW arranca solo con el transporte");
+    bStop.setTooltip ("Stop");
+    bRec.setTooltip (U8 ("Grabar la entrada de audio del canal (o el micr\xc3\xb3" "fono en la versi\xc3\xb3n Standalone)"));
+    bPlay.onClick = [this] { proc.togglePlay(); };
+    bStop.onClick = [this] { proc.stopAll(); };
+    bRec.onClick = [this] { String m; proc.toggleRecord (m); if (m.isNotEmpty()) afterLoad (m); };
+
+    // ---- columna derecha
     panel.addAndMakeVisible (lcd);
-    lcd.setBounds (380, 82, 220, 40);
+    lcd.setBounds (851, 273, 108, 68);
     lcd.setTooltip ("Tempo. Dentro del DAW sigue al proyecto; fuera, arrastra arriba/abajo para cambiarlo (doble clic = tempo del loop)");
     panel.addAndMakeVisible (render);
-    render.setBounds (686, 80, 200, 52);
+    render.setBounds (852, 350, 106, 106);
     render.toast = [this] (const String& m) { toast (m); };
+    panel.addAndMakeVisible (bAjustes);
+    bAjustes.setBounds (hb (854, 520, 102, 40));
+    bAjustes.setTooltip ("Ajustes del motor: cortes, filtro DJ, Key Lock, tempo, quantize, FX Lock");
+    bAjustes.onClick = [this] { showSettings (! setOv.isVisible()); };
 
+    // ---- panel CHOPPER: modos + pantalla
+    for (int i = 0; i < 6; ++i)
+    {
+        auto b = std::make_unique<ui::BlackButton> (kModes[i], String(), 13.5f);
+        const float w = (652.0f - 20.0f) / 6.0f;
+        b->setBounds (hb (roundToInt (164 + i * (w + 4)), 126, roundToInt (w), 38));
+        b->setTooltip (presets()[(size_t) i].info);
+        b->onClick = [this, i] { proc.setParam ("preset", (float) i); refreshButtons(); };
+        panel.addAndMakeVisible (*b);
+        modeBtn[(size_t) i] = std::move (b);
+    }
     panel.addAndMakeVisible (wave);
-    wave.setBounds (28, 142, 924, 252);
+    wave.setBounds (166, 176, 648, 206);
     wave.toast = [this] (const String& m) { toast (m); };
-    wave.onSelectionChanged = [this] { refreshSelectors(); for (auto& k : knobs) k->repaint(); panel.repaint (0, 408, 980, 170); };
+    wave.onSelectionChanged = [this] { refreshButtons(); for (auto& k : knobs) k->repaint(); panel.repaint (150, 404, 680, 244); };
     wave.addChildComponent (setOv);
     wave.addChildComponent (libOv);
-    setOv.setBounds (0, 0, 924, 252);
-    libOv.setBounds (0, 0, 924, 252);
+    setOv.setBounds (0, 0, 648, 206);
+    libOv.setBounds (0, 0, 648, 206);
     setOv.onClose = [this] { showSettings (false); };
     setOv.toast = [this] (const String& m) { toast (m); };
-    libOv.onClose = [this] { showLibrary (false); };
     libOv.close.onClick = [this] { showLibrary (false); };
     libOv.onPick = [this] (int i)
     {
@@ -106,39 +113,42 @@ VocalChopperEditor::VocalChopperEditor (VocalChopperProcessor& p)
         afterLoad (m);
     };
 
+    // ---- panel MACROS: direccion + latch + mandos
+    {
+        const float w = (396.0f - 72.0f - 4 * 4 - 6) / 4.0f;
+        for (int i = 0; i < 4; ++i)
+        {
+            auto b = std::make_unique<ui::BlackButton> (dirNames()[(size_t) i], String(), 12.5f);
+            b->setBounds (hb (roundToInt (420 + i * (w + 4)), 418, roundToInt (w), 34));
+            b->onClick = [this, i] { pickDirection (i); };
+            panel.addAndMakeVisible (*b);
+            dirBtn[(size_t) i] = std::move (b);
+        }
+        panel.addAndMakeVisible (bLatch);
+        bLatch.setBounds (hb (816 - 72, 418, 72, 34));
+        bLatch.setTooltip ("Latch: el chop o el roll se queda en bucle");
+        bLatch.onClick = [this]
+        {
+            const bool on = proc.pv ("latch") < .5f;
+            proc.setParam ("latch", on ? 1.0f : 0.0f);
+            toast (on ? U8 ("LATCH ON \xc2\xb7 el chop se queda en bucle") : String ("LATCH OFF"));
+            refreshButtons();
+        };
+    }
     setupKnobs();
 
-    for (auto* s : { &sel1, &sel2 }) panel.addAndMakeVisible (*s);
-    sel1.setBounds (150, 599, 276, 44);
-    sel2.setBounds (446, 599, 276, 44);
-    sel1.onIcon = [this] { showSettings (! setOv.isVisible()); };
-    sel1.onName = [this] { openMenu (1); };
-    sel1.onPrev = [this] { stepSel (1, -1); };
-    sel1.onNext = [this] { stepSel (1, 1); };
-    sel2.onIcon = [this]
-    {
-        const bool on = proc.pv ("latch") < .5f;
-        proc.setParam ("latch", on ? 1.0f : 0.0f);
-        toast (on ? U8 ("LATCH ON \xc2\xb7 el chop se queda en bucle") : String ("LATCH OFF"));
-        refreshSelectors();
-    };
-    sel2.onName = [this] { openMenu (2); };
-    sel2.onPrev = [this] { stepSel (2, -1); };
-    sel2.onNext = [this] { stepSel (2, 1); };
-    panel.addChildComponent (menu);
-
     panel.addAndMakeVisible (toastC);
-    toastC.setBounds (0, 340, 980, 32);
+    toastC.setBounds (0, 339, 980, 28);
 
     addMouseListener (this, true);
     setWantsKeyboardFocus (true);
 
     setResizable (true, true);
     setResizeLimits (588, 396, 1960, 1320);
-    if (auto* c = getConstrainer()) c->setFixedAspectRatio (980.0 / 660.0);
+    if (auto* cst = getConstrainer()) cst->setFixedAspectRatio (980.0 / 660.0);
     setSize (980, 660);
 
-    refreshSelectors();
+    refreshButtons();
     wave.tick();
     startTimerHz (30);
 }
@@ -154,11 +164,10 @@ void VocalChopperEditor::setupKnobs()
 {
     for (int k = 0; k < 7; ++k)
     {
-        const bool small = k >= 5;
-        auto kn = std::make_unique<ui::Knob> (small);
+        const bool io = k >= 5;
+        auto kn = std::make_unique<ui::Knob> (! io);
         auto* id = kKnobId[k];
         const bool isPitch = k == 1;
-        kn->bipolar = k == 0 || k == 1 || k == 5;
         kn->getValue = [this, id, isPitch] (bool alt) -> float
         {
             if (isPitch && alt) return proc.pv ("formant");
@@ -167,28 +176,26 @@ void VocalChopperEditor::setupKnobs()
         };
         kn->setValue = [this, id, isPitch, k] (float v, bool alt)
         {
-            if (isPitch && alt) { if (auto* p = proc.apvts.getParameter ("formant")) p->setValueNotifyingHost (v); }
+            if (isPitch && alt) { if (auto* pr = proc.apvts.getParameter ("formant")) pr->setValueNotifyingHost (v); }
             else if (isPitch && proc.selected >= 0) proc.setChopPitch (proc.selected, (int) std::lround (v * 24 - 12));
-            else if (auto* p = proc.apvts.getParameter (id)) p->setValueNotifyingHost (p->convertTo0to1 (v));
-            if (k >= 5) toast ((k == 5 ? "IN " : "OUT ") + knobText (k));
+            else if (auto* pr = proc.apvts.getParameter (id)) pr->setValueNotifyingHost (pr->convertTo0to1 (v));
+            if (k >= 5) toast ((k == 5 ? "INPUT " : "OUTPUT ") + knobText (k));
         };
         kn->gesture = [this, id, isPitch] (bool begin, bool alt)
         {
             if (isPitch && ! alt && proc.selected >= 0) return;
-            if (auto* p = proc.apvts.getParameter (isPitch && alt ? "formant" : id)) { if (begin) p->beginChangeGesture(); else p->endChangeGesture(); }
+            if (auto* pr = proc.apvts.getParameter (isPitch && alt ? "formant" : id)) { if (begin) pr->beginChangeGesture(); else pr->endChangeGesture(); }
         };
         kn->onReset = [this, id, isPitch, k]
         {
             if (isPitch && proc.selected >= 0) proc.setChopPitch (proc.selected, 0);
             else proc.setParam (id, kKnobDef[k]);
         };
-        if (isPitch)
-            kn->getArc2 = [this] { const float f = proc.pv ("formant"); return std::abs (f - .5f) > .01f ? f : -1.0f; };
         kn->setTooltip (isPitch ? U8 ("Arrastra: semitonos \xc2\xb7 Alt/Shift + arrastra: formantes \xc2\xb7 doble clic: reset")
                                 : U8 ("Arrastra arriba/abajo \xc2\xb7 Ctrl = fino \xc2\xb7 doble clic: reset"));
         panel.addAndMakeVisible (*kn);
-        if (small) kn->setBounds (k == 5 ? 806 : 902, 592, 56, 56);
-        else kn->setBounds (k * 196 + 50, 434, 96, 96);
+        if (io) kn->setBounds (k == 5 ? 75 - 56 : 905 - 56, 118, 112, 112);
+        else kn->setBounds (roundToInt (knobCx (k) - 49), roundToInt (kKnobY - 49), 98, 98);
         knobs[(size_t) k] = std::move (kn);
     }
 }
@@ -217,7 +224,7 @@ String VocalChopperEditor::knobText (int k)
     }
 }
 
-void VocalChopperEditor::paint (Graphics& g) { g.fillAll (Colour (0xff070b22)); }
+void VocalChopperEditor::paint (Graphics& g) { g.fillAll (Colour (0xff0f1638)); }
 
 void VocalChopperEditor::resized()
 {
@@ -226,172 +233,180 @@ void VocalChopperEditor::resized()
     panel.setTransform (AffineTransform::scale (s));
 }
 
+// ------------------------------------------------------------------ dibujo del cuerpo (todo lo que no es un control)
 void VocalChopperEditor::paintPanel (Graphics& g)
 {
+    using namespace ui;
     const auto B = Rectangle<float> (0, 0, 980, 660);
     Path shape; shape.addRoundedRectangle (B, 22);
     g.reduceClipRegion (shape);
-    ColourGradient bg (Colour (0xff2d54f2), 0, 0, Colour (0xff1a37c0), 0, 660, false);
-    bg.addColour (.48, Colour (0xff2246dc));
-    g.setGradientFill (bg);
+    g.setColour (ui::c::body);
     g.fillPath (shape);
-    g.setColour (Colours::white.withAlpha (.03f));
-    for (int x = 0; x < 980; x += 3) g.fillRect ((float) x, 0.0f, 1.0f, 660.0f);
-    g.setColour (Colours::white.withAlpha (.4f));
-    g.drawHorizontalLine (0, 22, 958);
+    g.setColour (Colours::black.withAlpha (.18f));
+    g.strokePath (shape, PathStrokeType (6.0f));
 
     // tornillos
-    for (auto p : { Point<float> (9, 9), Point<float> (960, 9), Point<float> (9, 563), Point<float> (960, 563) })
+    for (auto p : { Point<float> (24, 24), Point<float> (956, 24), Point<float> (24, 636), Point<float> (956, 636) })
     {
-        auto r = Rectangle<float> (p.x, p.y, 11, 11);
-        g.setColour (Colours::black.withAlpha (.5f)); g.fillEllipse (r.translated (0, 1));
-        ColourGradient cg (Colour (0xffe9edf6), r.getX() + 3.8f, r.getY() + 3.3f, Colour (0xff4a5170), r.getRight(), r.getBottom(), true);
-        cg.addColour (.7, Colour (0xff8790a8));
+        auto r = Rectangle<float> (p.x - 10, p.y - 10, 20, 20);
+        g.setColour (Colours::white.withAlpha (.25f)); g.fillEllipse (r.translated (0, 1));
+        ColourGradient cg (Colour (0xff55565c), r.getX() + 8, r.getY() + 7, Colour (0xff1b1c20), r.getRight(), r.getBottom(), true);
         g.setGradientFill (cg); g.fillEllipse (r);
-        Path sl; sl.addRectangle (-3.5f, -.5f, 7, 1);
-        g.setColour (Colour (0xff3a4060));
-        g.fillPath (sl, AffineTransform::rotation (35 * MathConstants<float>::pi / 180).translated (r.getCentreX(), r.getCentreY()));
+        g.setColour (Colours::black);
+        g.fillRoundedRectangle (p.x - 5, p.y - 1, 10, 2, 1);
+        g.fillRoundedRectangle (p.x - 1, p.y - 5, 2, 10, 1);
     }
 
-    // hueco del logo oficial de Soundtastics
+    // titulo en caja amarilla + lettering oficial "by soundtastics"
     {
-        auto r = Rectangle<float> (30, 22, 42, 42);
-        g.setColour (Colours::white.withAlpha (.1f)); g.fillRoundedRectangle (r, 12);
-        g.setColour (Colours::white.withAlpha (.25f)); g.drawHorizontalLine (23, 36, 66);
-        if (auto& d = logoIcon()) d->drawAt (g, 40, 32, 1.0f);
-    }
-
-    // titulo
-    {
-        const auto f1 = ui::font (19, false, .42f), f2 = ui::font (19, true, .42f);
-        const String a = "VOCAL ", b = "CHOPPER";
-        const float w1 = GlyphArrangement::getStringWidth (f1, a), w2 = GlyphArrangement::getStringWidth (f2, b);
-        const float x = (980 - (w1 + w2)) / 2 + 4;
-        ui::drawText (g, a, { x, 28, w1 + 2, 26 }, Justification::centredLeft, f1, Colours::white);
-        ui::drawText (g, b, { x + w1, 28, w2 + 4, 26 }, Justification::centredLeft, f2, Colours::white);
-        ui::drawText (g, "CHOP" + dot + "ROLL" + dot + "STUTTER", { 0, 54, 980, 14 }, Justification::centred, ui::font (9.5f, false, .3f),
-                      Colours::white.withAlpha (.55f));
-    }
-
-    // pozo del transporte
-    {
-        auto r = Rectangle<float> (30, 80, 202, 54);
-        g.setColour (Colours::black.withAlpha (.18f)); g.fillRoundedRectangle (r, 14);
-        ui::innerShadow (g, r, 14, 3, .45f);
-        g.setColour (Colours::white.withAlpha (.15f)); g.drawHorizontalLine (134, 44, 218);
-    }
-
-    // columna de cada macro: icono, nombre y valor
-    for (int c = 0; c < 5; ++c)
-    {
-        const float x0 = c * 196.0f;
-        if (c > 0)
+        const auto f = heavy (25);
+        const String t = "VOCAL CHOPPER";
+        const float tw = GlyphArrangement::getStringWidth (f, t);
+        auto box = Rectangle<float> (60, 14, tw + 28 + 8, 48);
+        g.setColour (ui::c::ink); g.fillRoundedRectangle (box, 6);
+        g.setColour (ui::c::yel); g.fillRoundedRectangle (box.reduced (4), 3);
+        drawText (g, t, box.reduced (18, 4), Justification::centredLeft, f, ui::c::ink);
+        auto img = lettering();
+        if (img.isValid())
         {
-            ColourGradient sg (Colours::transparentBlack, x0, 422, Colours::transparentBlack, x0, 558, false);
-            sg.addColour (.5, Colours::black.withAlpha (.22f));
-            g.setGradientFill (sg); g.fillRect (x0, 422.0f, 1.0f, 136.0f);
-            g.setColour (Colours::white.withAlpha (.08f)); g.fillRect (x0 + 1, 422.0f, 1.0f, 136.0f);
+            const float h = 24, w = h * img.getWidth() / (float) img.getHeight();
+            g.setImageResamplingQuality (Graphics::highResamplingQuality);
+            g.drawImage (img, Rectangle<float> (404, 20, w, h));
         }
-        if (auto& d = knobIcons()[(size_t) c]) d->drawAt (g, x0 + 98 - 11, 408, .85f);
-        const bool chopEdit = c == 1 && proc.selected >= 0;
-        ui::drawText (g, kKnobLabel[c], { x0, 538, 196, 14 }, Justification::centred, ui::font (11, true, .16f),
-                      chopEdit ? vc::col::acc : Colours::white);
-        ui::drawText (g, knobText (c), { x0, 554, 196, 13 }, Justification::centred, ui::mono (10), vc::col::mut);
+        g.setColour (ui::c::ink); g.fillRoundedRectangle (404, 52, 236, 3, 1.5f);
     }
 
-    // barra inferior
+    // etiquetas INPUT / OUTPUT y extremos de sus mandos
+    auto labelBox = [&] (float cx, float y, const String& s)
     {
-        g.setGradientFill (ColourGradient (Colour (0xff0c1756), 0, 582, Colour (0xff081040), 0, 660, false));
-        g.fillRect (0.0f, 582.0f, 980.0f, 78.0f);
-        g.setColour (Colours::white.withAlpha (.12f)); g.drawHorizontalLine (582, 0, 980);
-        g.setColour (Colours::black.withAlpha (.3f)); g.fillRect (0.0f, 583.0f, 980.0f, 3.0f);
-        const auto f = ui::font (9.5f, true, .14f);
-        ui::drawText (g, "IN", { 740, 592, 58, 56 }, Justification::centredRight, f, Colours::white.withAlpha (.88f));
-        ui::drawText (g, "OUT", { 836, 592, 58, 56 }, Justification::centredRight, f, Colours::white.withAlpha (.88f));
-        auto led = Rectangle<float> (958, 590, 6, 6);
-        if (proc.fx.limiterReductionDb.load() < -1.5f)
+        const auto f = cond (17);
+        const float tw = GlyphArrangement::getStringWidth (f, s) + 24;
+        auto r = Rectangle<float> (cx - tw / 2 - 3, y, tw + 6, 31);
+        g.setColour (ui::c::ink); g.fillRoundedRectangle (r, 6);
+        g.setColour (ui::c::cream); g.fillRoundedRectangle (r.reduced (3), 3);
+        drawText (g, s, r, Justification::centred, f, ui::c::ink);
+    };
+    labelBox (75, 80, "INPUT");
+    labelBox (905, 80, "OUTPUT");
+    drawText (g, "-24", { 20, 214, 50, 20 }, Justification::centredLeft, cond (16), ui::c::ink);
+    drawText (g, "+12", { 80, 214, 50, 20 }, Justification::centredRight, cond (16), ui::c::ink);
+    drawText (g, U8 ("-\xe2\x88\x9e"), { 850, 214, 50, 20 }, Justification::centredLeft, cond (16), ui::c::ink);
+    drawText (g, "+6", { 910, 214, 50, 20 }, Justification::centredRight, cond (16), ui::c::ink);
+
+    // piloto del limitador
+    {
+        auto led = Rectangle<float> (900, 472, 10, 10);
+        g.setColour (ui::c::ink); g.fillEllipse (led.expanded (2));
+        g.setColour (proc.fx.limiterReductionDb.load() < -1.5f ? ui::c::rec : Colour (0xff14181f)); g.fillEllipse (led);
+        drawText (g, "LIMIT", { 842, 486, 126, 14 }, Justification::centred, cond (11), ui::c::ink);
+    }
+
+    // paneles de color
+    auto pane = [&] (Rectangle<float> r, Colour col)
+    {
+        g.setColour (col); g.fillRoundedRectangle (r, 12);
+        g.setColour (Colours::black.withAlpha (.12f)); g.drawRoundedRectangle (r.reduced (1), 11, 2);
+    };
+    pane ({ 150, 78, 680, 318 }, ui::c::mint);
+    pane ({ 150, 404, 680, 244 }, ui::c::cyan);
+    auto tag = [&] (float x, float y, const String& s)
+    {
+        const auto f = heavy (26);
+        const float tw = GlyphArrangement::getStringWidth (f, s);
+        auto r = Rectangle<float> (x, y, tw + 24, 33);
+        g.setColour (ui::c::pink); g.fillRoundedRectangle (r, 5);
+        drawText (g, s, r.withTrimmedLeft (12).withTrimmedBottom (1), Justification::centredLeft, f, ui::c::ink);
+        return r;
+    };
+    auto t1 = tag (164, 90, "CHOPPER");
+    g.setColour (ui::c::ink); g.fillRoundedRectangle (t1.getRight() + 12, 110, 816 - t1.getRight() - 12, 3, 1.5f);
+    tag (164, 414, "MACROS");
+
+    // marco de la pantalla
+    {
+        auto r = Rectangle<float> (164, 174, 652, 210);
+        g.setColour (ui::c::ink); g.fillRoundedRectangle (r.expanded (3), 9);
+        g.setColour (ui::c::screen); g.fillRoundedRectangle (r, 7);
+    }
+
+    // macros: nombre arriba, extremos y valor abajo, separadores
+    for (int cidx = 0; cidx < 5; ++cidx)
+    {
+        const float cx = knobCx (cidx);
+        const bool chopEdit = cidx == 1 && proc.selected >= 0;
+        drawText (g, kKnobLabel[cidx], { cx - 68, 470, 136, 22 }, Justification::centred, cond (17), ui::c::ink);
+        drawText (g, U8 (kEnds[cidx][0]), { cx - 59, 578, 60, 18 }, Justification::centredLeft, cond (14), ui::c::ink);
+        drawText (g, U8 (kEnds[cidx][1]), { cx - 1, 578, 60, 18 }, Justification::centredRight, cond (14), ui::c::ink);
+        drawText (g, knobText (cidx), { cx - 68, 600, 136, 14 }, Justification::centred, mono (10, true),
+                  chopEdit ? ui::c::ink : Colours::black.withAlpha (.6f));
+        if (cidx > 0)
         {
-            g.setColour (vc::col::red.withAlpha (.35f)); g.fillEllipse (led.expanded (3));
-            g.setColour (vc::col::red); g.fillEllipse (led);
+            g.setColour (ui::c::ink);
+            g.fillRoundedRectangle (150 + 136.0f * cidx - 1.5f, 498, 3, 120, 1.5f);
         }
-        else { g.setColour (Colours::white.withAlpha (.12f)); g.fillEllipse (led); }
     }
 }
 
-void VocalChopperEditor::refreshSelectors()
+// ------------------------------------------------------------------ estado de los botones
+void VocalChopperEditor::refreshButtons()
 {
     const int preset = (int) proc.pv ("preset");
-    const String t1 = presets()[(size_t) clampv (preset, 0, 5)].name;
-    String t2;
-    if (proc.selected >= 0)
-    {
-        const int d = proc.getChopDir (proc.selected);
-        t2 = String ("CHOP: ") + (d == 2 ? "REVERSE" : d == 1 ? "FORWARD" : "GLOBAL");
-    }
-    else t2 = dirNames()[(size_t) clampv ((int) proc.pv ("direction"), 0, 3)];
-    const bool i1 = setOv.isVisible(), i2 = proc.pv ("latch") > .5f;
-    if (t1 != sel1.text || i1 != sel1.iconOn) { sel1.text = t1; sel1.iconOn = i1; sel1.repaint(); }
-    if (t2 != sel2.text || i2 != sel2.iconOn) { sel2.text = t2; sel2.iconOn = i2; sel2.repaint(); }
-}
+    for (int i = 0; i < 6; ++i) modeBtn[(size_t) i]->setOn (i == preset);
 
-void VocalChopperEditor::openMenu (int which)
-{
-    if (menu.isVisible() && menuWhich == which) { closeMenu(); return; }
-    menuWhich = which;
-    menu.items.clear();
-    if (which == 1)
+    const int sel = proc.selected;
+    if (sel >= 0)
     {
-        const int cur = (int) proc.pv ("preset");
-        for (int i = 0; i < 6; ++i) menu.items.push_back ({ presets()[(size_t) i].name, presets()[(size_t) i].info, i == cur });
-        menu.onPick = [this] (int i) { proc.setParam ("preset", (float) i); closeMenu(); refreshSelectors(); };
-    }
-    else if (proc.selected >= 0)
-    {
-        const int d = proc.getChopDir (proc.selected);
-        const char* names[3] = { "GLOBAL", "FORWARD", "REVERSE" };
-        for (int i = 0; i < 3; ++i) menu.items.push_back ({ names[i], {}, i == d });
-        menu.onPick = [this] (int i) { proc.setChopDir (proc.selected, i); closeMenu(); refreshSelectors(); };
+        // edicion individual: FORWARD / REVERSE se aplican solo a este chop
+        const int d = proc.getChopDir (sel);
+        for (int i = 0; i < 4; ++i)
+        {
+            auto& b = *dirBtn[(size_t) i];
+            b.setEnabled (i < 2);
+            b.setOn ((i == 0 && d == 1) || (i == 1 && d == 2));
+            b.setTooltip (i < 2 ? U8 ("Direcci\xc3\xb3n solo de este chop (vuelve a pulsar para usar la global)") : String());
+        }
     }
     else
     {
         const int d = (int) proc.pv ("direction");
-        for (int i = 0; i < 4; ++i) menu.items.push_back ({ dirNames()[(size_t) i], {}, i == d });
-        menu.onPick = [this] (int i) { proc.setParam ("direction", (float) i); closeMenu(); refreshSelectors(); };
+        for (int i = 0; i < 4; ++i)
+        {
+            auto& b = *dirBtn[(size_t) i];
+            b.setEnabled (true);
+            b.setOn (i == d);
+            b.setTooltip (U8 ("Direcci\xc3\xb3n de reproducci\xc3\xb3n"));
+        }
     }
-    auto& s = which == 1 ? sel1 : sel2;
-    const int h = menu.idealHeight(), w = which == 1 ? 240 : 200;
-    menu.setBounds (s.getX() + 44, s.getY() - 8 - h, w, h);
-    menu.setVisible (true);
-    menu.toFront (false);
+    bLatch.setOn (proc.pv ("latch") > .5f);
+    bAjustes.setOn (setOv.isVisible());
+    bLib.setOn (libOv.isVisible());
 }
 
-void VocalChopperEditor::closeMenu() { menu.setVisible (false); }
-
-void VocalChopperEditor::stepSel (int which, int d)
+void VocalChopperEditor::pickDirection (int i)
 {
-    if (which == 1)
+    const int sel = proc.selected;
+    if (sel >= 0)
     {
-        const int p = modi ((int) proc.pv ("preset") + d, 6);
-        proc.setParam ("preset", (float) p);
-        toast (String (presets()[(size_t) p].name) + dot + presets()[(size_t) p].info);
+        if (i > 1) return;
+        const int want = i == 0 ? 1 : 2;
+        proc.setChopDir (sel, proc.getChopDir (sel) == want ? 0 : want);
     }
-    else if (proc.selected >= 0) proc.setChopDir (proc.selected, modi (proc.getChopDir (proc.selected) + d, 3));
-    else proc.setParam ("direction", (float) modi ((int) proc.pv ("direction") + d, 4));
-    refreshSelectors();
+    else proc.setParam ("direction", (float) i);
+    refreshButtons();
 }
 
 void VocalChopperEditor::showSettings (bool show)
 {
     if (show) { libOv.setVisible (false); setOv.refresh(); }
     setOv.setVisible (show);
-    refreshSelectors();
+    refreshButtons();
 }
 
 void VocalChopperEditor::showLibrary (bool show)
 {
     if (show) setOv.setVisible (false);
     libOv.setVisible (show);
-    refreshSelectors();
+    refreshButtons();
 }
 
 void VocalChopperEditor::afterLoad (const String& msg)
@@ -399,58 +414,51 @@ void VocalChopperEditor::afterLoad (const String& msg)
     render.reset();
     wave.tick();
     setOv.refresh();
-    refreshSelectors();
+    refreshButtons();
     panel.repaint();
     if (msg.isNotEmpty()) toast (msg);
 }
 
 void VocalChopperEditor::timerCallback()
 {
-    // seleccion de chop hecha por MIDI
     const int serial = proc.engine.uiSelectSerial.load();
     if (serial != lastSelSerial)
     {
         lastSelSerial = serial;
         proc.selected = proc.engine.uiSelected.load();
-        refreshSelectors();
+        panel.repaint (150, 404, 680, 244);
     }
     if (proc.selected >= proc.numChops()) proc.selected = -1;
 
     wave.tick();
     render.tick();
     lcd.repaint();
-
-    auto setLed = [] (ui::HwButton& b, bool on) { if (b.led != on) { b.led = on; b.repaint(); } };
-    setLed (bPlay, proc.enginePlaying.load());
-    setLed (bRec, proc.isRecording());
+    bPlay.setOn (proc.enginePlaying.load());
+    bRec.setOn (proc.isRecording());
 
     bool textChanged = false;
     for (int k = 0; k < 7; ++k)
     {
         auto& kn = *knobs[(size_t) k];
-        const float v = kn.getValue (false) + (k == 1 ? proc.pv ("formant") * 10 + (proc.selected >= 0 ? 100.0f : 0.0f) : 0.0f);
-        kn.chopMode = k == 1 && proc.selected >= 0;
-        if (v != lastVal[(size_t) k]) { lastVal[(size_t) k] = v; kn.repaint(); }
+        const bool chop = k == 1 && proc.selected >= 0;
+        const float v = kn.getValue (false) + (chop ? 100.0f : 0.0f);
+        if (kn.chopMode != chop) { kn.chopMode = chop; kn.repaint(); }
+        if (std::abs (v - lastVal[(size_t) k]) > 1e-6f) { lastVal[(size_t) k] = v; kn.repaint(); }
         if (k < 5)
         {
             const auto t = knobText (k);
             if (t != lastText[(size_t) k]) { lastText[(size_t) k] = t; textChanged = true; }
         }
     }
-    if (textChanged) panel.repaint (0, 530, 980, 40);
+    if (textChanged) panel.repaint (150, 596, 680, 22);
     const bool lim = proc.fx.limiterReductionDb.load() < -1.5f;
-    if (lim != lastLim) { lastLim = lim; panel.repaint (950, 584, 20, 16); }
-    refreshSelectors();
+    if (lim != lastLim) { lastLim = lim; panel.repaint (894, 466, 22, 22); }
+    refreshButtons();
     if (setOv.isVisible()) setOv.refresh();
 }
 
-void VocalChopperEditor::mouseDown (const MouseEvent& e)
+void VocalChopperEditor::mouseDown (const MouseEvent&)
 {
-    if (menu.isVisible())
-    {
-        auto* c = e.eventComponent;
-        if (c != &menu && c != &sel1 && c != &sel2) closeMenu();
-    }
     if (! hasKeyboardFocus (true)) grabKeyboardFocus();
 }
 
@@ -460,7 +468,6 @@ bool VocalChopperEditor::keyPressed (const KeyPress& k)
     if (k == KeyPress::escapeKey)
     {
         proc.selected = -1;
-        closeMenu();
         showSettings (false);
         showLibrary (false);
         return true;
@@ -469,7 +476,7 @@ bool VocalChopperEditor::keyPressed (const KeyPress& k)
     const int i = keyMap.indexOfChar (ch);
     if (i >= 0)
     {
-        if (! heldKeys.containsChar (ch)) { heldKeys += String::charToString (ch); proc.pressChop (i); refreshSelectors(); }
+        if (! heldKeys.containsChar (ch)) { heldKeys += String::charToString (ch); proc.pressChop (i); refreshButtons(); }
         return true;
     }
     return false;

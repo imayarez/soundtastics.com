@@ -6,42 +6,61 @@
 
 namespace ui
 {
-juce::Font font (float cssPx, bool bold = false, float kern = 0.0f);
-juce::Font mono (float cssPx, bool bold = false);
+// ---------------------------------------------------------------- colores (familia SFX, cuerpo azul)
+namespace c
+{
+    const juce::Colour body  { 0xff2448e6 };
+    const juce::Colour mint  { 0xff46e0b4 };
+    const juce::Colour cyan  { 0xff38d3ec };
+    const juce::Colour pink  { 0xffff7f9e };
+    const juce::Colour blk   { 0xff232428 };
+    const juce::Colour yel   { 0xffffe23a };
+    const juce::Colour ink   { 0xff111111 };
+    const juce::Colour cream { 0xfffff6c4 };
+    const juce::Colour screen{ 0xff08090b };
+    const juce::Colour rec   { 0xffff4d5a };
+}
+
+// ---------------------------------------------------------------- letras (incluidas en el plugin)
+juce::Font heavy (float px);                 // Archivo Black: titulo y etiquetas rosas
+juce::Font cond (float px);                  // Oswald SemiBold: botones y rotulos
+juce::Font mono (float px, bool bold = false);
+juce::Font font (float px, bool bold = false, float kern = 0.0f); // sistema, textos largos
 std::unique_ptr<juce::Drawable> icon (const juce::String& svg);
 void drawText (juce::Graphics&, const juce::String&, juce::Rectangle<float>, juce::Justification, const juce::Font&, juce::Colour);
-void innerShadow (juce::Graphics&, juce::Rectangle<float>, float radius, float depth, float alpha);
+juce::Image lettering();                     // "by soundtastics" oficial
 
-// ------------------------------------------------ boton de hardware azul
-class HwButton : public juce::Component, public juce::SettableTooltipClient
+// ---------------------------------------------------------------- boton negro (amarillo cuando esta activo)
+class BlackButton : public juce::Component, public juce::SettableTooltipClient
 {
 public:
-    enum Style { blue, round, render };
-    HwButton (const juce::String& svg, Style s = blue);
+    explicit BlackButton (const juce::String& text = {}, const juce::String& svg = {}, float textPx = 13.0f);
     std::function<void()> onClick;
-    bool led = false, ledRed = false, hasLed = false;
-    void setIcon (const juce::String& svg) { ico = icon (svg); repaint(); }
+    juce::String text;
+    bool on = false;
+    juce::Colour onColour = c::yel;
+    void setOn (bool v) { if (v != on) { on = v; repaint(); } }
     void paint (juce::Graphics&) override;
-    void mouseDown (const juce::MouseEvent&) override { down = true; repaint(); }
-    void mouseUp (const juce::MouseEvent& e) override;
-protected:
-    std::unique_ptr<juce::Drawable> ico;
-    Style style;
+    void mouseDown (const juce::MouseEvent&) override { if (isEnabled()) { down = true; repaint(); } }
+    void mouseUp (const juce::MouseEvent&) override;
+private:
+    std::unique_ptr<juce::Drawable> icoW, icoK;
+    float px;
     bool down = false;
 };
 
-// ------------------------------------------------ mando giratorio
+// ---------------------------------------------------------------- mando rojo con escala impresa
 class Knob : public juce::Component, public juce::SettableTooltipClient
 {
 public:
-    Knob (bool small) : isSmall (small) {}
-    std::function<float (bool alt)> getValue;         // 0..1
-    std::function<void (float, bool alt)> setValue;  // alt = Alt/Shift
+    explicit Knob (bool big) : isBig (big) {}
+    std::function<float (bool alt)> getValue;
+    std::function<void (float, bool alt)> setValue;
     std::function<void (bool begin, bool alt)> gesture;
-    std::function<float()> getArc2;                  // <0 = sin segundo arco
     std::function<void()> onReset;
-    bool bipolar = false, chopMode = false;
-    bool altHeld = false;
+    bool chopMode = false, altHeld = false;
+    // zona del mando dentro del componente (deja sitio a la escala)
+    juce::Rectangle<float> knobArea() const;
     void paint (juce::Graphics&) override;
     void mouseDown (const juce::MouseEvent&) override;
     void mouseDrag (const juce::MouseEvent&) override;
@@ -49,44 +68,12 @@ public:
     void mouseDoubleClick (const juce::MouseEvent&) override { if (onReset) onReset(); repaint(); }
     void mouseWheelMove (const juce::MouseEvent&, const juce::MouseWheelDetails&) override;
 private:
-    bool isSmall;
+    bool isBig;
     float y0 = 0, v0 = 0;
     bool alt = false;
 };
 
-// ------------------------------------------------ lista desplegable (menus de los selectores)
-class MenuList : public juce::Component
-{
-public:
-    struct Item { juce::String name, info; bool on; };
-    std::vector<Item> items;
-    std::function<void (int)> onPick;
-    void paint (juce::Graphics&) override;
-    void mouseMove (const juce::MouseEvent& e) override { hover = rowAt (e.y); repaint(); }
-    void mouseExit (const juce::MouseEvent&) override { hover = -1; repaint(); }
-    void mouseUp (const juce::MouseEvent& e) override { const int r = rowAt (e.y); if (r >= 0 && onPick) onPick (r); }
-    int idealHeight() const;
-private:
-    int rowAt (int y) const;
-    int rowH (int i) const { return items[(size_t) i].info.isEmpty() ? 31 : 44; }
-    int hover = -1;
-};
-
-// ------------------------------------------------ selector inferior (< STRAIGHT >)
-class Selector : public juce::Component
-{
-public:
-    Selector (const juce::String& iconSvg);
-    std::function<void()> onIcon, onName, onPrev, onNext;
-    juce::String text;
-    bool iconOn = false;
-    void paint (juce::Graphics&) override;
-    void mouseDown (const juce::MouseEvent&) override;
-private:
-    std::unique_ptr<juce::Drawable> ico, icoOn, chev;
-};
-
-// ------------------------------------------------ segmentos (AUTO | VOCAL | GOLPE)
+// ---------------------------------------------------------------- segmentos (ajustes)
 class Seg : public juce::Component
 {
 public:
@@ -97,7 +84,6 @@ public:
     void mouseDown (const juce::MouseEvent&) override;
 };
 
-// ------------------------------------------------ boton de cerrar (x)
 class CloseButton : public juce::Component
 {
 public:
@@ -112,18 +98,18 @@ public:
     Look();
     void drawLinearSlider (juce::Graphics&, int, int, int, int, float, float, float, juce::Slider::SliderStyle, juce::Slider&) override;
     void drawComboBox (juce::Graphics&, int, int, bool, int, int, int, int, juce::ComboBox&) override;
-    juce::Font getComboBoxFont (juce::ComboBox&) override { return font (11); }
+    juce::Font getComboBoxFont (juce::ComboBox&) override { return cond (12); }
     void positionComboBoxText (juce::ComboBox&, juce::Label&) override;
-    juce::Font getPopupMenuFont() override { return font (11, true); }
+    juce::Font getPopupMenuFont() override { return cond (13); }
     void drawPopupMenuBackground (juce::Graphics&, int, int) override;
     void drawTooltip (juce::Graphics&, const juce::String&, int, int) override;
 };
 
-// ------------------------------------------------ overlay de ajustes del motor
+// ---------------------------------------------------------------- overlay de ajustes (dentro de la pantalla)
 class SettingsOverlay : public juce::Component
 {
 public:
-    SettingsOverlay (VocalChopperProcessor&);
+    explicit SettingsOverlay (VocalChopperProcessor&);
     std::function<void()> onClose;
     std::function<void (const juce::String&)> toast;
     void paint (juce::Graphics&) override;
@@ -139,15 +125,14 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> rootA, scaleA;
 };
 
-// ------------------------------------------------ overlay de libreria
+// ---------------------------------------------------------------- overlay de libreria
 class LibraryOverlay : public juce::Component
 {
 public:
-    LibraryOverlay (VocalChopperProcessor& p) : proc (p) { addAndMakeVisible (close); }
-    std::function<void()> onClose;
+    explicit LibraryOverlay (VocalChopperProcessor& p) : proc (p) { addAndMakeVisible (close); }
     std::function<void (int)> onPick;
     void paint (juce::Graphics&) override;
-    void resized() override { close.setBounds (getWidth() - 42, 10, 30, 30); }
+    void resized() override { close.setBounds (getWidth() - 34, 6, 26, 26); }
     void mouseMove (const juce::MouseEvent& e) override { hover = itemAt (e.position); repaint(); }
     void mouseExit (const juce::MouseEvent&) override { hover = -1; repaint(); }
     void mouseUp (const juce::MouseEvent& e) override { const int i = itemAt (e.position); if (i >= 0 && onPick) onPick (i); }
@@ -159,7 +144,7 @@ private:
     int hover = -1;
 };
 
-// ------------------------------------------------ visor central de onda
+// ---------------------------------------------------------------- pantalla de la onda
 class WaveView : public juce::Component
 {
 public:
@@ -167,6 +152,7 @@ public:
     std::function<void (const juce::String&)> toast;
     std::function<void()> onSelectionChanged;
     void paint (juce::Graphics&) override;
+    void resized() override { version = -1; }
     void mouseDown (const juce::MouseEvent&) override;
     void mouseDrag (const juce::MouseEvent&) override;
     void mouseUp (const juce::MouseEvent&) override;
@@ -180,6 +166,7 @@ private:
     double Tm (float x) const;
     struct Hit { int type; int i; }; // 0 = A, 1 = B, 2 = linea, 3 = chop
     Hit hitTest (float x) const;
+    juce::Rectangle<float> chipRect() const;
 
     VocalChopperProcessor& proc;
     ContentSnapshot snap;
@@ -191,9 +178,11 @@ private:
     int pressed = -1;
     double dur = 1;
     juce::Random rnd;
+    float W = 648, H = 206;
+    static constexpr float PADX = 12, TOP = 26, BOT = 22;
 };
 
-// ------------------------------------------------ boton RENDER FILE
+// ---------------------------------------------------------------- RENDER FILE
 class RenderButton : public juce::Component, public juce::SettableTooltipClient
 {
 public:
@@ -209,8 +198,7 @@ public:
 private:
     VocalChopperProcessor& proc;
     std::shared_ptr<std::atomic<float>> prog = std::make_shared<std::atomic<float>> (0.0f);
-    bool busy = false;
-    bool ready = false, dragged = false;
+    bool busy = false, ready = false, dragged = false, down = false;
     int bars = 0;
     juce::File file;
     std::unique_ptr<juce::Drawable> waveIco, dlIco;
@@ -218,7 +206,7 @@ private:
     std::shared_ptr<bool> alive = std::make_shared<bool> (true);
 };
 
-// ------------------------------------------------ pantalla de tempo
+// ---------------------------------------------------------------- pantallita de tempo
 class Lcd : public juce::Component, public juce::SettableTooltipClient
 {
 public:
@@ -232,7 +220,7 @@ private:
     float y0 = 0, b0 = 120;
 };
 
-// ------------------------------------------------ mensajito flotante
+// ---------------------------------------------------------------- aviso flotante
 class Toast : public juce::Component, private juce::Timer
 {
 public:

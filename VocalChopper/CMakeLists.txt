@@ -52,6 +52,11 @@ juce_add_plugin(VocalChopper
     AU_MAIN_TYPE kAudioUnitType_MusicDevice
     COPY_PLUGIN_AFTER_BUILD FALSE)
 
+juce_add_binary_data(VocalChopperData SOURCES
+    Resources/fonts/ArchivoBlack-Regular.ttf
+    Resources/fonts/Oswald-SemiBold.ttf
+    Resources/img/by_soundtastics_white.png)
+
 target_sources(VocalChopper PRIVATE
     Source/Analysis.cpp
     Source/Factory.cpp
@@ -76,6 +81,7 @@ endif()
 
 target_link_libraries(VocalChopper
     PRIVATE
+        VocalChopperData
         juce::juce_audio_utils
         juce::juce_audio_formats
         juce::juce_dsp
