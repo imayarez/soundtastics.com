@@ -541,25 +541,56 @@ void WaveView::buildLayer (const SampleData& s)
         const float* d1 = s.buf.getReadPointer (1);
         const int n = s.buf.getNumSamples();
         const float mid = TOP + (VH - TOP - BOT) / 2, hh = (VH - TOP - BOT) / 2 - 6;
-        ColourGradient gr (Colours::white, 0, mid - hh, Colours::white, 0, mid + hh, false);
-        gr.addColour (.3, Colour (0xff8fe9ff)); gr.addColour (.5, Colour (0xff4f7bff)); gr.addColour (.7, Colour (0xff8fe9ff));
-        g.setGradientFill (gr);
+
+        // Onda por frecuencias (estilo CDJ): graves rosa-rojo, medios amarillo, agudos cian
+        struct Bq2
+        {
+            double b0, b1, b2, a1, a2, x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+            Bq2 (bool hp, double f, double sr)
+            {
+                const double w = 2 * vc::kPi * f / sr, al = std::sin (w) / (2 * std::sqrt (0.5)), cw = std::cos (w), a0 = 1 + al;
+                b0 = (hp ? (1 + cw) / 2 : (1 - cw) / 2) / a0; b1 = (hp ? -(1 + cw) : 1 - cw) / a0; b2 = b0;
+                a1 = -2 * cw / a0; a2 = (1 - al) / a0;
+            }
+            double run (double x) { const double y = b0 * x + b1 * x1 + b2 * x2 - a1 * y1 - a2 * y2; x2 = x1; x1 = x; y2 = y1; y1 = y; return y; }
+        };
+        Bq2 l1 (false, 200, s.sr), l2 (false, 200, s.sr), h1 (true, 2500, s.sr), h2 (true, 2500, s.sr);
+        std::vector<float> LO ((size_t) n), HI ((size_t) n), MI ((size_t) n);
+        for (int i = 0; i < n; ++i)
+        {
+            const double x = (d0[i] + d1[i]) * 0.5, l = l2.run (l1.run (x)), h = h2.run (h1.run (x));
+            LO[(size_t) i] = (float) l; HI[(size_t) i] = (float) h; MI[(size_t) i] = (float) (x - l - h);
+        }
+        struct Col { float x, m, rms, eL, eM, eH; };
+        std::vector<Col> cols;
+        float mL = 1e-9f, mM = 1e-9f, mH = 1e-9f;
         for (float x = PADX; x < VW - PADX; x += 3)
         {
             const int a = (int) ((x - PADX) / (VW - 2 * PADX) * n), b = std::min (n, (int) ((x + 3 - PADX) / (VW - 2 * PADX) * n));
-            float m = 0; double ss = 0;
+            float m = 0; double ss = 0, eL = 0, eM = 0, eH = 0;
             for (int i = a; i < b; i += 2)
             {
                 const float v = std::max (std::abs (d0[i]), std::abs (d1[i]));
                 if (v > m) m = v;
                 ss += v * v;
+                eL += LO[(size_t) i] * LO[(size_t) i]; eM += MI[(size_t) i] * MI[(size_t) i]; eH += HI[(size_t) i] * HI[(size_t) i];
             }
-            const float rms = (float) std::sqrt (ss / std::max (1.0, (b - a) / 2.0));
-            const float h = std::max (1.0f, std::pow (m, .8f) * hh), hr = std::max (.5f, std::pow (rms, .8f) * hh * 1.2f);
-            g.setOpacity (.45f);
-            g.fillRect (x, mid - h, 2.0f, h * 2);
-            g.setOpacity (1.0f);
-            g.fillRect (x, mid - hr, 2.0f, hr * 2);
+            Col c { x, m, (float) std::sqrt (ss / std::max (1.0, (b - a) / 2.0)), (float) std::sqrt (eL), (float) std::sqrt (eM), (float) std::sqrt (eH) };
+            mL = std::max (mL, c.eL); mM = std::max (mM, c.eM); mH = std::max (mH, c.eH);
+            cols.push_back (c);
+        }
+        const float CL[3] { 255, 59, 107 }, CM[3] { 255, 210, 63 }, CH[3] { 127, 230, 255 };
+        for (auto& k : cols)
+        {
+            const float h = std::max (1.0f, std::pow (k.m, .8f) * hh), hr = std::max (.5f, std::pow (k.rms, .8f) * hh * 1.2f);
+            const float wL = std::pow (k.eL / mL, 2.2f), wM = std::pow (k.eM / mM, 2.2f) * .8f, wH = std::pow (k.eH / mH, 2.2f) * 1.2f;
+            const float W = wL + wM + wH > 0 ? wL + wM + wH : 1.0f;
+            auto ch = [&] (int j) { return (uint8) jlimit (0, 255, roundToInt ((CL[j] * wL + CM[j] * wM + CH[j] * wH) / W)); };
+            const Colour c = k.rms < .004f ? Colours::white.withAlpha (.28f) : Colour (ch (0), ch (1), ch (2));
+            g.setColour (c.withMultipliedAlpha (.45f));
+            g.fillRect (k.x, mid - h, 2.0f, h * 2);
+            g.setColour (c);
+            g.fillRect (k.x, mid - hr, 2.0f, hr * 2);
         }
     }
     blurLayer = layer.rescaled (layer.getWidth() / 10, layer.getHeight() / 10, Graphics::highResamplingQuality);
